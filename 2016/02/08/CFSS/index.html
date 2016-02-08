@@ -59,15 +59,15 @@
 
 <meta name="description" content="3000-fps-cvpr14的方法:http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf整个流程基于Cascade Pose Regression(http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf)，训练步骤如下：(参">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3000-fps-CFSS">
-<meta property="og:url" content="http://yoursite.com/2016/02/08/3000-fps-CFSS/index.html">
+<meta property="og:title" content="CFSS">
+<meta property="og:url" content="http://yoursite.com/2016/02/08/CFSS/index.html">
 <meta property="og:site_name" content="Victor's Blog">
 <meta property="og:description" content="3000-fps-cvpr14的方法:http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf整个流程基于Cascade Pose Regression(http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf)，训练步骤如下：(参">
-<meta property="og:image" content="http://yoursite.com/./1454664119237.png">
-<meta property="og:image" content="http://yoursite.com/./1454660991747.png">
-<meta property="og:updated_time" content="2016-02-08T03:17:57.000Z">
+<meta property="og:image" content="http://yoursite.com/2016/02/08/CFSS/1454664119237.png">
+<meta property="og:image" content="http://yoursite.com/2016/02/08/CFSS/1454660991747.png">
+<meta property="og:updated_time" content="2016-02-08T03:55:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3000-fps-CFSS">
+<meta name="twitter:title" content="CFSS">
 <meta name="twitter:description" content="3000-fps-cvpr14的方法:http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf整个流程基于Cascade Pose Regression(http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf)，训练步骤如下：(参">
 
 
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title> 3000-fps-CFSS | Victor's Blog </title>
+  <title> CFSS | Victor's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -206,7 +206,7 @@
             
             
               
-                3000-fps-CFSS
+                CFSS
               
             
           </h1>
@@ -218,7 +218,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-02-08T11:15:12+08:00" content="2016-02-08">
+            <time itemprop="dateCreated" datetime="2016-02-08T11:52:12+08:00" content="2016-02-08">
               2016-02-08
             </time>
           </span>
@@ -244,13 +244,15 @@
       
 
       
-        <h2 id="3000-fps-cvpr14_u7684_u65B9_u6CD5_3Ahttp_3A//research-microsoft-com/en-us/people/yichenw/cvpr14_facealignment-pdf"><a href="#3000-fps-cvpr14_u7684_u65B9_u6CD5_3Ahttp_3A//research-microsoft-com/en-us/people/yichenw/cvpr14_facealignment-pdf" class="headerlink" title="3000-fps-cvpr14的方法:http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf"></a>3000-fps-cvpr14的方法:<a href="http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf</a></h2><p>整个流程基于Cascade Pose Regression(<a href="http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf" target="_blank" rel="external">http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf</a>)，训练步骤如下：(参考xbb学长的博客)</p>
+        <h2 id="3000-fps-cvpr14_u7684_u65B9_u6CD5_3A"><a href="#3000-fps-cvpr14_u7684_u65B9_u6CD5_3A" class="headerlink" title="3000-fps-cvpr14的方法:"></a>3000-fps-cvpr14的方法:</h2><p><a href="http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf</a><br>整个流程基于Cascade Pose Regression(<a href="http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf" target="_blank" rel="external">http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf</a>)，训练步骤如下：(参考xbb学长的博客)</p>
 <h3 id="u7279_u5F81_u63D0_u53D6"><a href="#u7279_u5F81_u63D0_u53D6" class="headerlink" title="特征提取"></a>特征提取</h3><ol>
 <li>先random产生500个pixel difference features</li>
 <li>选取最具有分辨力的pixel difference features作为Random Forest中每棵树中的非叶子结点</li>
-<li>输入图片得到Local Binary Features<br>一句话就是通过PDF+RF得到了一个稀疏的特征<br>特征提取方法来自于一篇cvpr12：<a href="http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf</a><h3 id="u56DE_u5F52"><a href="#u56DE_u5F52" class="headerlink" title="回归"></a>回归</h3><img src="/./1454664119237.png" alt="Alt text"><br>没有发现很特殊的地方？</li>
+<li>输入图片得到Local Binary Features<br>一句话就是通过PDF+RF得到了一个稀疏的特征<br>特征提取方法来自于一篇cvpr12：<a href="http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf</a><h3 id="u56DE_u5F52"><a href="#u56DE_u5F52" class="headerlink" title="回归"></a>回归</h3><img src="/2016/02/08/CFSS/1454664119237.png" alt="1454664119237.png" title="">
+没有发现很特殊的地方？</li>
 </ol>
-<h2 id="CFSS_u7684_u65B9_u6CD5_uFF1A"><a href="#CFSS_u7684_u65B9_u6CD5_uFF1A" class="headerlink" title="CFSS的方法："></a>CFSS的方法：</h2><p><img src="/./1454660991747.png" alt="Alt text"><br>注意：</p>
+<h2 id="CFSS_u7684_u65B9_u6CD5_uFF1A"><a href="#CFSS_u7684_u65B9_u6CD5_uFF1A" class="headerlink" title="CFSS的方法："></a>CFSS的方法：</h2><img src="/2016/02/08/CFSS/1454660991747.png" alt="1454660991747.png" title="">
+<p>注意：</p>
 <ol>
 <li>L=stageTot=3 每个stage之间用的Pr不同</li>
 <li>stage内部也有3次迭代，训练的是三个不同的回归模型，10张脸经过3次不同的回归得到10张新脸，然后poseVoting函数算出平均脸（这个函数里面有个100次迭代的算法，详见论文及其引用）</li>
@@ -389,7 +391,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3000-fps-cvpr14_u7684_u65B9_u6CD5_3Ahttp_3A//research-microsoft-com/en-us/people/yichenw/cvpr14_facealignment-pdf"><span class="nav-number">1.</span> <span class="nav-text">3000-fps-cvpr14的方法:http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u7279_u5F81_u63D0_u53D6"><span class="nav-number">1.1.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u56DE_u5F52"><span class="nav-number">1.2.</span> <span class="nav-text">回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CFSS_u7684_u65B9_u6CD5_uFF1A"><span class="nav-number">2.</span> <span class="nav-text">CFSS的方法：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3000-fps-cvpr14_u7684_u65B9_u6CD5_3A"><span class="nav-number">1.</span> <span class="nav-text">3000-fps-cvpr14的方法:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u7279_u5F81_u63D0_u53D6"><span class="nav-number">1.1.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u56DE_u5F52"><span class="nav-number">1.2.</span> <span class="nav-text">回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CFSS_u7684_u65B9_u6CD5_uFF1A"><span class="nav-number">2.</span> <span class="nav-text">CFSS的方法：</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
