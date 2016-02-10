@@ -254,18 +254,20 @@
       
         
           
-            <p>###classification与retrieval问题对比<br><img src="/2016/02/10/Classification-Retrieval/1.png" alt="1.png" title=""></p>
+            <h3 id="classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4"><a href="#classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4" class="headerlink" title="classification与retrieval问题对比"></a>classification与retrieval问题对比</h3><img src="/2016/02/10/Classification-Retrieval/1.png" alt="1.png" title="">
 <ol>
 <li>如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier</li>
 <li>classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同</li>
 <li>数据集来自indoor-67，每个图片已经赋予了一定的描述向量</li>
 </ol>
-<p>###用classification的方法解决retrieval问题<br><img src="/2016/02/10/Classification-Retrieval/2.png" alt="2.png" title=""><br><img src="/2016/02/10/Classification-Retrieval/3.png" alt="3.png" title=""></p>
+<h3 id="u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898"><a href="#u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898" class="headerlink" title="用classification的方法解决retrieval问题"></a>用classification的方法解决retrieval问题</h3><img src="/2016/02/10/Classification-Retrieval/2.png" alt="2.png" title="">
+<img src="/2016/02/10/Classification-Retrieval/3.png" alt="3.png" title="">
 <ol>
 <li>把每个图定义为一个类别，每个图的子patch作为该类的“图片”，提取该“图片”的特征放到特征空间如图，用image-class距离作为query图与数据库中图片的距离</li>
 <li>这种距离的计算方法类似于KNN</li>
 </ol>
-<p>###复杂度分析<br><br></p>
+<h3 id="u590D_u6742_u5EA6_u5206_u6790"><a href="#u590D_u6742_u5EA6_u5206_u6790" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><img src="/2016/02/10/Classification-Retrieval/4.png" alt="4.png" title="">
+<img src="/2016/02/10/Classification-Retrieval/5.png" alt="5.png" title="">
 <ol>
 <li>计算图间距离比普通的方法大了K^2倍，改用PCA和PQ降低复杂度</li>
 <li>算法复杂度仍是瓶颈</li>
