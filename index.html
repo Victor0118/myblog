@@ -212,6 +212,107 @@
             
               
                 
+                <a class="post-title-link" href="/2016/02/10/Classification-Retrieval/" itemprop="url">
+                  Classification_Retrieval
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-02-10T11:08:07+08:00" content="2016-02-10">
+              2016-02-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###classification与retrieval问题对比<br><img src="/2016/02/10/Classification-Retrieval/1.png" alt="1.png" title=""></p>
+<ol>
+<li>如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier</li>
+<li>classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同</li>
+<li>数据集来自indoor-67，每个图片已经赋予了一定的描述向量</li>
+</ol>
+<p>###用classification的方法解决retrieval问题<br><img src="/2016/02/10/Classification-Retrieval/2.png" alt="2.png" title=""><br><img src="/2016/02/10/Classification-Retrieval/3.png" alt="3.png" title=""></p>
+<ol>
+<li>把每个图定义为一个类别，每个图的子patch作为该类的“图片”，提取该“图片”的特征放到特征空间如图，用image-class距离作为query图与数据库中图片的距离</li>
+<li>这种距离的计算方法类似于KNN</li>
+</ol>
+<p>###复杂度分析<br><br></p>
+<ol>
+<li>计算图间距离比普通的方法大了K^2倍，改用PCA和PQ降低复杂度</li>
+<li>算法复杂度仍是瓶颈</li>
+<li>PQ的算法见paper：<a href="https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf" target="_blank" rel="external">https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf</a></li>
+<li>常见近邻算法：<a href="http://blog.csdn.net/guoyilin/article/details/39668183" target="_blank" rel="external">http://blog.csdn.net/guoyilin/article/details/39668183</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/02/08/CFSS/" itemprop="url">
                   CFSS
                 </a>
@@ -719,7 +820,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
