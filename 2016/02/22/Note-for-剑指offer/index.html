@@ -57,34 +57,31 @@
 
 
 
-<meta name="description" content="##剑指offer笔记
-###Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
+<meta name="description" content="剑指offer笔记Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
 
 是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。
 是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）
 是否释放实例自身已有的内存（如果在分配新内存之前不释放自己已有的空间，将内存泄露）
-是否">
+是否判断传入的参">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Note for 剑指offer">
 <meta property="og:url" content="http://yoursite.com/2016/02/22/Note-for-剑指offer/index.html">
 <meta property="og:site_name" content="Victor's Blog">
-<meta property="og:description" content="##剑指offer笔记
-###Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
+<meta property="og:description" content="剑指offer笔记Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
 
 是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。
 是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）
 是否释放实例自身已有的内存（如果在分配新内存之前不释放自己已有的空间，将内存泄露）
-是否">
-<meta property="og:updated_time" content="2016-02-22T15:28:00.000Z">
+是否判断传入的参">
+<meta property="og:updated_time" content="2016-02-22T15:37:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Note for 剑指offer">
-<meta name="twitter:description" content="##剑指offer笔记
-###Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
+<meta name="twitter:description" content="剑指offer笔记Q1：赋值运算符函数为class CMyString添加赋值运算符函数注意点：
 
 是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。
 是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）
 是否释放实例自身已有的内存（如果在分配新内存之前不释放自己已有的空间，将内存泄露）
-是否">
+是否判断传入的参">
 
 
 
@@ -260,8 +257,7 @@
       
 
       
-        <p>##剑指offer笔记</p>
-<p>###Q1：赋值运算符函数<br>为class CMyString添加赋值运算符函数<br>注意点：</p>
+        <h2 id="u5251_u6307offer_u7B14_u8BB0"><a href="#u5251_u6307offer_u7B14_u8BB0" class="headerlink" title="剑指offer笔记"></a>剑指offer笔记</h2><h3 id="Q1_uFF1A_u8D4B_u503C_u8FD0_u7B97_u7B26_u51FD_u6570"><a href="#Q1_uFF1A_u8D4B_u503C_u8FD0_u7B97_u7B26_u51FD_u6570" class="headerlink" title="Q1：赋值运算符函数"></a>Q1：赋值运算符函数</h3><p>为class CMyString添加赋值运算符函数<br>注意点：</p>
 <ol>
 <li>是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。</li>
 <li>是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）</li>
@@ -278,14 +274,13 @@
 <p>方法2参考代码：</p>
 <p>CMyString&amp; CMyString::operator=(const CMyString &amp;str)<br>{<br>if(this != &amp;str)<br>{<br>CMyString strTemp(str);<br>char <em> pTemp = str.m_pData;<br>strTemp.m_pData = m_pData;<br>m_pData = pTemp;<br>}<br>return </em>this;<br>}</p>
 <p>注：程序运行到if外面就出了该变量的作用域，自动调用strTemp的析构函数</p>
-<p>###Q4：替换空格</p>
-<p>实现一个函数，把字符串中的每个空格替换成”%20”</p>
+<h3 id="Q4_uFF1A_u66FF_u6362_u7A7A_u683C"><a href="#Q4_uFF1A_u66FF_u6362_u7A7A_u683C" class="headerlink" title="Q4：替换空格"></a>Q4：替换空格</h3><p>实现一个函数，把字符串中的每个空格替换成”%20”</p>
 <p>暴力：O(n<sup>2</sup>)<br>O(n)方法：从尾部开始遍历</p>
 <p>举一反三：合并两个数组时，可以考虑从后往前复制</p>
-<p>###Q6：重建二叉树<br>输入二叉树的前序遍历和中序遍历的结果，重建出该二叉树。</p>
-<p>###Q7：用两个栈实现队列<br>用两个栈实现队列的两个函数appendTail和deleteHead</p>
+<h3 id="Q6_uFF1A_u91CD_u5EFA_u4E8C_u53C9_u6811"><a href="#Q6_uFF1A_u91CD_u5EFA_u4E8C_u53C9_u6811" class="headerlink" title="Q6：重建二叉树"></a>Q6：重建二叉树</h3><p>输入二叉树的前序遍历和中序遍历的结果，重建出该二叉树。</p>
+<h3 id="Q7_uFF1A_u7528_u4E24_u4E2A_u6808_u5B9E_u73B0_u961F_u5217"><a href="#Q7_uFF1A_u7528_u4E24_u4E2A_u6808_u5B9E_u73B0_u961F_u5217" class="headerlink" title="Q7：用两个栈实现队列"></a>Q7：用两个栈实现队列</h3><p>用两个栈实现队列的两个函数appendTail和deleteHead</p>
 <p>举一反三：用两个队列实现一个栈</p>
-<p>###Q9: 斐波那契数列<br>求Fibonacci数列的第n项</p>
+<h3 id="Q9_3A__u6590_u6CE2_u90A3_u5951_u6570_u5217"><a href="#Q9_3A__u6590_u6CE2_u90A3_u5951_u6570_u5217" class="headerlink" title="Q9: 斐波那契数列"></a>Q9: 斐波那契数列</h3><p>求Fibonacci数列的第n项</p>
 <p>用递归的方法计算的时间复杂度是以n的指数的方式递增的<br>改进：保存数列中间项，如果下次需要计算的时候先查找一下<br>另解：从下往上算，无需保存数列</p>
 <p>补充：时间复杂度O(logn)但不够使用过的方法<br>利用斐波那契矩阵公式和二分法求乘方</p>
 <p>Q10：二进制中1的个数</p>
@@ -294,30 +289,30 @@
 <p>版本二：</p>
 <p>int NumberOf1(int n)<br>{<br>int count = 0;<br>unsigned int flag = 1;<br>while(flag)<br>{<br>if(n &amp; flag)<br>count ++;<br>flag = flag &lt;&lt; 1;<br>}<br>return count;<br>}<br>版本三:</p>
 <p>int NumberOf1(int n)<br>{<br>int count = 0;<br>while(n)<br>{<br>++ count;<br>n = (n-1) &amp; n;<br>}<br>return count;<br>}</p>
-<p>###Q11：数值的整数次方<br>实现函数double Power(double base, int exponent)，不需考虑大数问题。<br>全面而高效的解法：</p>
+<h3 id="Q11_uFF1A_u6570_u503C_u7684_u6574_u6570_u6B21_u65B9"><a href="#Q11_uFF1A_u6570_u503C_u7684_u6574_u6570_u6B21_u65B9" class="headerlink" title="Q11：数值的整数次方"></a>Q11：数值的整数次方</h3><p>实现函数double Power(double base, int exponent)，不需考虑大数问题。<br>全面而高效的解法：</p>
 <p>bool g_invalidInput = false;<br>double Power(double base, int exponent)<br>{<br>g_InvalidInput = false;<br>if(equal(base,0,0) &amp;&amp; exponent &lt; 0)<br>{<br>g_InvalidInput = true;<br>return 0.0;<br>}<br>unsigned int absExpoent = (unsigned int)(exponent);<br>if(exponent &lt; 0)<br>absExponent = (unsigned int)(-exponent);<br>double result = PowerWithUnsignedExponent(base, absExponent);<br>if(exponent &lt; 0)<br>result = 1.0/result;<br>return result;<br>}</p>
 <p>duoble PowerWithUnsignedExponent(double base, unsigned int exponent)<br>{<br>if(exponent == 0 )<br>return 1;<br>if(exponent == 1 )<br>return base;</p>
 <p>double result = PowerWithUnsignedExponent(base,exponent&gt;&gt;1);<br>result <em>= result;<br>if(exponent &amp; 0x1 == 1)<br>result </em>= base;<br>return result;<br>}</p>
 <p>bool equal(double num1, double num2)<br>{<br>if((num1-num2 &gt; -0.00000001)<br>&amp;&amp; (num1 -num2 &lt; 0.00000001))<br>return true;<br>else<br>return false;<br>}</p>
-<p>###Q18：树的子结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#20004;&#26869;&#20108;&#21449;&#26641;A&#21644;B&#65292;&#21028;&#26029;B&#26159;&#19981;&#26159;A&#30340;&#23376;&#32467;&#26500;&#65292;&#20108;&#21449;&#26641;&#32467;&#28857;&#23450;&#20041;&#22914;&#19979;&#65306;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Q18_uFF1A_u6811_u7684_u5B50_u7ED3_u6784"><a href="#Q18_uFF1A_u6811_u7684_u5B50_u7ED3_u6784" class="headerlink" title="Q18：树的子结构"></a>Q18：树的子结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#20004;&#26869;&#20108;&#21449;&#26641;A&#21644;B&#65292;&#21028;&#26029;B&#26159;&#19981;&#26159;A&#30340;&#23376;&#32467;&#26500;&#65292;&#20108;&#21449;&#26641;&#32467;&#28857;&#23450;&#20041;&#22914;&#19979;&#65306;</span><br></pre></td></tr></table></figure>
 <p>struct BinaryTreeNode<br>{<br>int m_nValue;<br>BinaryTreeNode<em> m_pLeft;<br>BinaryTreeNode</em> m_pRight;<br>}</p>
 <p>核心代码：</p>
 <p>bool HasSubtree(BinaryTreeNOde<em> pRoot1, BinaryTreeNode</em> pRoot2)<br>{<br>bool result = false;<br>if(pRoot1 != NULL &amp;&amp; pRoot2 != NULL)<br>{<br>if(pRoot1-&gt;m_nValue == pRoot2-&gt;m_nValue)<br>result = DoesTree1HaveTree2(pRoot1,pRoot2);<br>if(!result)<br>result = HasSubtree(pRoot1-&gt;m_pLeft,pRoot2);<br>if(!result)<br>result = HasSubtree(pRoot1-&gt;mRight,pRoot2);<br>}<br>return result;<br>}</p>
-<p>###Q21：包含min函数的栈<br>定义栈的数据结构， 能在O(1)复杂度能得到栈的最小元素<br>提示：构造辅助栈</p>
-<p>###Q24：二叉搜索树的后序遍历序列<br>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。假设输入的数组的任意两个数字不相同。<br>类似的：前序遍历<br>方法参考Q6</p>
-<p>###Q25：二叉树中和为某一值得路径<br>输入一棵二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。从树的根结点开始往下一直到叶子结点所经过的结点形成一条路径。<br>ps：如果结点没有指向父结点的职责恩，我们可以在遍历的时候用一个栈lai来保存从根结点到当前结点的路径</p>
-<p>###Q27：二叉搜索树与双向链表<br>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点。<br>参考代码如下：</p>
+<h3 id="Q21_uFF1A_u5305_u542Bmin_u51FD_u6570_u7684_u6808"><a href="#Q21_uFF1A_u5305_u542Bmin_u51FD_u6570_u7684_u6808" class="headerlink" title="Q21：包含min函数的栈"></a>Q21：包含min函数的栈</h3><p>定义栈的数据结构， 能在O(1)复杂度能得到栈的最小元素<br>提示：构造辅助栈</p>
+<h3 id="Q24_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u7684_u540E_u5E8F_u904D_u5386_u5E8F_u5217"><a href="#Q24_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u7684_u540E_u5E8F_u904D_u5386_u5E8F_u5217" class="headerlink" title="Q24：二叉搜索树的后序遍历序列"></a>Q24：二叉搜索树的后序遍历序列</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。假设输入的数组的任意两个数字不相同。<br>类似的：前序遍历<br>方法参考Q6</p>
+<h3 id="Q25_uFF1A_u4E8C_u53C9_u6811_u4E2D_u548C_u4E3A_u67D0_u4E00_u503C_u5F97_u8DEF_u5F84"><a href="#Q25_uFF1A_u4E8C_u53C9_u6811_u4E2D_u548C_u4E3A_u67D0_u4E00_u503C_u5F97_u8DEF_u5F84" class="headerlink" title="Q25：二叉树中和为某一值得路径"></a>Q25：二叉树中和为某一值得路径</h3><p>输入一棵二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。从树的根结点开始往下一直到叶子结点所经过的结点形成一条路径。<br>ps：如果结点没有指向父结点的职责恩，我们可以在遍历的时候用一个栈lai来保存从根结点到当前结点的路径</p>
+<h3 id="Q27_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u4E0E_u53CC_u5411_u94FE_u8868"><a href="#Q27_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u4E0E_u53CC_u5411_u94FE_u8868" class="headerlink" title="Q27：二叉搜索树与双向链表"></a>Q27：二叉搜索树与双向链表</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点。<br>参考代码如下：</p>
 <p>BinaryTreeNode<em> Convert(BinaryTreeNode</em> pRootOfTree)<br>{<br>BinaryTreeNode *pLastNodeInList = NULL;<br>ConvertNode(pRootOfTree,&amp;pLastNodeInList);</p>
 <p>//通过尾结点得到头结点<br>BinaryTreeNode *pHeadOfList =pLastNodeInList;<br>while(pHeadOfList != NULL &amp;&amp; pHeadOfList -&gt; m_pLeft != NULL)<br>pHeadOfList = pHeadOfList-&gt;m_pList;<br>return pHeadOfList;<br>}</p>
 <p>void ConvertNode(BinaryTreeNode<em> pNode, BinaryTreeNode** pLastNodeInList)<br>{<br>if(pNode == NULL)<br>return;<br>BinaryTreeNode </em> pCurrent = pNode;<br>if(pCurrent-&gt;m_pLeft!=NULL)<br>ConvertNode(pCurrent-&gt;m_pLeft,pLastNodeInList);</p>
 <p>pCurrent-&gt;m_pLeft = <em>pLastNodeInList;<br>if(</em>pLastNodeInList != NULL)<br>(*pLastNodeInList)-&gt;m_pRight = pCurrent;</p>
 <p>*pLastNodeInList = pCurrent;</p>
 <p>if(pCurrent-&gt;m_pRight != NULL)<br>ConvertNode(pCurrent-&gt;m_pRight, pLastNodeInList);<br>}</p>
-<p>###Q28：字符串的排列<br>输入一个字符串，打印出该字符串中字符的所有排列<br>参考代码：</p>
+<h3 id="Q28_uFF1A_u5B57_u7B26_u4E32_u7684_u6392_u5217"><a href="#Q28_uFF1A_u5B57_u7B26_u4E32_u7684_u6392_u5217" class="headerlink" title="Q28：字符串的排列"></a>Q28：字符串的排列</h3><p>输入一个字符串，打印出该字符串中字符的所有排列<br>参考代码：</p>
 <p>void Permutation(char* pStr)<br>{<br>if(pStr == NULL)<br>return;<br>Permutation(pStr,pStr);<br>}</p>
 <p>void Permutation(char<em> pStr, char</em> pBegin)<br>{<br>if(<em>pBegin == ‘\0’)<br>printf(“%s\n”,pStr);<br>else<br>{<br>for(char</em> pCh = pBegin; <em>pCh != ‘\0’; ++ pCh)<br>{<br>char temp = </em>pCh;<br><em>pCh = </em>pBegin;<br><em>pBegin = temp;<br>Permutation(pStr,pBegin + 1);<br>temp = </em>pCh;<br><em>pCh = </em>pBegin;<br>*pBegin = temp;<br>}<br>}<br>}<br>举一反三：求字符的所有组合（比如输入三个字符a、b、c，则他们的组合有a、b、c、ab、ac、bc、abc）</p>
 <p>提示：在求n个字符的长度为m的组合的时候，分别求n-1个字符串中长度为m-1的组合，以及求n-1个字符的长度为m的组合。</p>
-<p>###Q30：最小的k个数<br>输入n个整数，找出其中的最小的k个数。</p>
+<h3 id="Q30_uFF1A_u6700_u5C0F_u7684k_u4E2A_u6570"><a href="#Q30_uFF1A_u6700_u5C0F_u7684k_u4E2A_u6570" class="headerlink" title="Q30：最小的k个数"></a>Q30：最小的k个数</h3><p>输入n个整数，找出其中的最小的k个数。</p>
 <p>解法一：基于Partition函数的方法，O(n)</p>
 <p>//实现快速排序的关键：先在数组中选择一个数字，接下来把数组中的数字分为两部分，比选择的数字小的数字移到数组的左边，比选择的数字大的数字移到数组的右边。<br>int Partition(int data[], int length, int start, int end)<br>{<br>if(data == NULL || length &lt;= 0 || start <0 ||="" end="">= length)<br>throw new std::exception(“Invalid Parameters”);<br>int index = RandomInRange(start, end);<br>Swap(&amp;data[index],&amp;data[end]);</0></p>
 <p>int small = start - 1;<br>for(index = start; index &lt; end; ++ index)<br>{<br>if(data[index]&lt;data[end])<br>{<br>++ small;<br>if(small != index)<br>Swap(&amp;data[index],&amp;data[small]);<br>}<br>}_<br>++small;<br>Swape(&amp;data[small],&amp;data[end]);<br>return small;<br>}<br>解法二：维护一个最大堆（放k个数的容器，在O(1)时间找到最大值，O(logn)时间删除最大数，插入新的数字），复杂度O(nlogn)<br>两个优点：</p>
@@ -325,9 +320,9 @@
 <li>没有修改输入的数据</li>
 <li>只要求内存能容纳k个数，不必把n个数据一次载入内存，适合海量数据的输入</li>
 </ol>
-<p>###Q36：数组中的逆序对<br>在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。<br>提示：类似于归并排序</p>
-<p>###Q37：两个链表的第一个公共结点<br>输入两个链表，找出他们的第一个公共结点<br>暴力：O(mn)<br>构造两个辅助栈，从后往前找：O(m+n)<br>优化：先遍历一次找出长度的差值，第二次遍历时，较长的链表先走那么多步，再同时遍历，O(m+n)</p>
-<p>###Q39：二叉树的深度<br>输入一棵二叉树的根结点，求该树的深度。</p>
+<h3 id="Q36_uFF1A_u6570_u7EC4_u4E2D_u7684_u9006_u5E8F_u5BF9"><a href="#Q36_uFF1A_u6570_u7EC4_u4E2D_u7684_u9006_u5E8F_u5BF9" class="headerlink" title="Q36：数组中的逆序对"></a>Q36：数组中的逆序对</h3><p>在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。<br>提示：类似于归并排序</p>
+<h3 id="Q37_uFF1A_u4E24_u4E2A_u94FE_u8868_u7684_u7B2C_u4E00_u4E2A_u516C_u5171_u7ED3_u70B9"><a href="#Q37_uFF1A_u4E24_u4E2A_u94FE_u8868_u7684_u7B2C_u4E00_u4E2A_u516C_u5171_u7ED3_u70B9" class="headerlink" title="Q37：两个链表的第一个公共结点"></a>Q37：两个链表的第一个公共结点</h3><p>输入两个链表，找出他们的第一个公共结点<br>暴力：O(mn)<br>构造两个辅助栈，从后往前找：O(m+n)<br>优化：先遍历一次找出长度的差值，第二次遍历时，较长的链表先走那么多步，再同时遍历，O(m+n)</p>
+<h3 id="Q39_uFF1A_u4E8C_u53C9_u6811_u7684_u6DF1_u5EA6"><a href="#Q39_uFF1A_u4E8C_u53C9_u6811_u7684_u6DF1_u5EA6" class="headerlink" title="Q39：二叉树的深度"></a>Q39：二叉树的深度</h3><p>输入一棵二叉树的根结点，求该树的深度。</p>
 <p>引申：输入一棵二叉树的根结点，判断该树是不是平衡二叉树。</p>
 <p>方法一：</p>
 <p>bool IsBalanced(BinaryTreeNode* pRoot)<br>{<br>if(pRoot == NULL)<br>return true;<br>int left = TreeDepth(pRoot-&gt;m_pLeft);<br>int right = TreeDepth(pRoot-&gt;m_pRight);<br>int diff = left -right;<br>if(diff &gt; 1 || diff &lt; -1)<br>return false;<br>return IsBalanced(pRoot-&gt;m_pLeft) &amp;&amp; IsBalanced(pRoot-&gt;m_pRight);<br>}<br>每个节点都会被重复遍历多次，效率不高</p>
@@ -335,16 +330,15 @@
 <p>bool IsBalanced(BinaryTreeNOde<em> pRoot, int</em> pDepth)<br>{<br>if(pRoot == NULL)<br>{<br><em>pDepth = 0;<br>return true;<br>}<br>int left,right;<br>if(IsBalanced(pRoot-&gt;m_pLeft,&amp;left)&amp;&amp;IsBalanced(pRoot-&gt;m_pRight,&amp;right))<br>{<br>int diff = left - right;<br>if(diff &lt;= 1 &amp;&amp; diff &gt;= -1)<br>{
 </em>pDepht = 1 + (left &gt; right ? left : right);<br>return true;_<br>}<br>}<br>return false;<br>}<br>我们只需给上面的函数传入二叉树的根结点及一个表示结点深度的整型变量即可：</p>
 <p>bool IsBalanced(BinaryTreeNode* pRoot)<br>{<br>int depth = 0;<br>return IsBalanced(pRoot, &amp;depth);<br>}_</p>
-<p>###Q40：数组中只出现一次的数字<br>一个整型数组里除了两个数字之外，其他的数字都出现两次。找出这连个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。<br>提示：异或的性质<br>全部取异或之后按第一个1的位置是不是1将原数组中的数字分为两个子数组，在分别异或。</p>
-<p>###Q41：和为s的两个数字-&gt;和为s的连续正整数序列<br>输入一个地震排序的数组和一个数字s，在数组中查找两个数，使得他们的和正好是s。如果有多对数字的和是s，输出任意一对即可。<br>规律：O(n)复杂度，一般都要想出两个指针来做<br>变式：输入一个整数s，打印出所有和为s的连续正整数序列（至少有两个数）</p>
-<p>###Q42：翻转单词顺序-&gt;左旋转字符串<br>输入一个英文句子，翻转单词的顺序，但单词内字符的顺序不变。</p>
+<h3 id="Q40_uFF1A_u6570_u7EC4_u4E2D_u53EA_u51FA_u73B0_u4E00_u6B21_u7684_u6570_u5B57"><a href="#Q40_uFF1A_u6570_u7EC4_u4E2D_u53EA_u51FA_u73B0_u4E00_u6B21_u7684_u6570_u5B57" class="headerlink" title="Q40：数组中只出现一次的数字"></a>Q40：数组中只出现一次的数字</h3><p>一个整型数组里除了两个数字之外，其他的数字都出现两次。找出这连个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。<br>提示：异或的性质<br>全部取异或之后按第一个1的位置是不是1将原数组中的数字分为两个子数组，在分别异或。</p>
+<h3 id="Q41_uFF1A_u548C_u4E3As_u7684_u4E24_u4E2A_u6570_u5B57-_26gt_3B_u548C_u4E3As_u7684_u8FDE_u7EED_u6B63_u6574_u6570_u5E8F_u5217"><a href="#Q41_uFF1A_u548C_u4E3As_u7684_u4E24_u4E2A_u6570_u5B57-_26gt_3B_u548C_u4E3As_u7684_u8FDE_u7EED_u6B63_u6574_u6570_u5E8F_u5217" class="headerlink" title="Q41：和为s的两个数字-&gt;和为s的连续正整数序列"></a>Q41：和为s的两个数字-&gt;和为s的连续正整数序列</h3><p>输入一个地震排序的数组和一个数字s，在数组中查找两个数，使得他们的和正好是s。如果有多对数字的和是s，输出任意一对即可。<br>规律：O(n)复杂度，一般都要想出两个指针来做<br>变式：输入一个整数s，打印出所有和为s的连续正整数序列（至少有两个数）</p>
+<h3 id="Q42_uFF1A_u7FFB_u8F6C_u5355_u8BCD_u987A_u5E8F-_26gt_3B_u5DE6_u65CB_u8F6C_u5B57_u7B26_u4E32"><a href="#Q42_uFF1A_u7FFB_u8F6C_u5355_u8BCD_u987A_u5E8F-_26gt_3B_u5DE6_u65CB_u8F6C_u5B57_u7B26_u4E32" class="headerlink" title="Q42：翻转单词顺序-&gt;左旋转字符串"></a>Q42：翻转单词顺序-&gt;左旋转字符串</h3><p>输入一个英文句子，翻转单词的顺序，但单词内字符的顺序不变。</p>
 <p>变式：定义一个函数实现字符串左旋转的功劳，比如输入字符串”abcdefg”和数字2，该函数将返回左旋转2位得到的结果”cdefgab”。</p>
-<p>###Q43：n个骰子的点数<br>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s，输入n，打印s的所有可能的值出现的概率。</p>
-<p>###Q49：把字符串转换成整数<br>enum StatusP{kValid = 0, kInvalid};<br>int g_nStatus = kValid;<br>int StrToInt(const char<em> str)<br>{<br>g_nStatus = kInvalid;<br>long long num = 0;<br>if(str != NULL &amp;&amp; </em>str != ‘\0’)<br>{<br>bool minus = false;<br>if(<em>str == ‘+’)<br>str++;<br>else if(</em>str == ‘-‘)<br>{<br>str ++;<br>minus = true;<br>}<br>if(*str != ‘\0’)<br>{<br>num = StrToIntCore(str,minus);<br>}<br>}<br>return (int)num;<br>}</p>
+<h3 id="Q43_uFF1An_u4E2A_u9AB0_u5B50_u7684_u70B9_u6570"><a href="#Q43_uFF1An_u4E2A_u9AB0_u5B50_u7684_u70B9_u6570" class="headerlink" title="Q43：n个骰子的点数"></a>Q43：n个骰子的点数</h3><p>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s，输入n，打印s的所有可能的值出现的概率。</p>
+<h3 id="Q49_uFF1A_u628A_u5B57_u7B26_u4E32_u8F6C_u6362_u6210_u6574_u6570"><a href="#Q49_uFF1A_u628A_u5B57_u7B26_u4E32_u8F6C_u6362_u6210_u6574_u6570" class="headerlink" title="Q49：把字符串转换成整数"></a>Q49：把字符串转换成整数</h3><p>enum StatusP{kValid = 0, kInvalid};<br>int g_nStatus = kValid;<br>int StrToInt(const char<em> str)<br>{<br>g_nStatus = kInvalid;<br>long long num = 0;<br>if(str != NULL &amp;&amp; </em>str != ‘\0’)<br>{<br>bool minus = false;<br>if(<em>str == ‘+’)<br>str++;<br>else if(</em>str == ‘-‘)<br>{<br>str ++;<br>minus = true;<br>}<br>if(*str != ‘\0’)<br>{<br>num = StrToIntCore(str,minus);<br>}<br>}<br>return (int)num;<br>}</p>
 <p>long long StrToIntCore(const char<em> digit, bool minus)<br>{<br>long long num = 0;<br>while(</em>digit != ‘\0’)<br>{<br>if(<em>digit &gt;= ‘0’ &amp;&amp; </em>digit &lt;= ‘9’)<br>{<br>int flag = minus?-1:1;<br>num = num <em> 10 + flag </em> (<em>digit - ‘0’);<br>if((!minus &amp;&amp; num &gt; 0x7FFFFFFF)<br>|| (minus &amp;&amp; num &lt; (signed int)0x80000000))<br>{<br>num = 0;<br>break;<br>}<br>digit++;<br>}<br>else<br>{<br>num ++;<br>break;<br>}<br>if(</em>digit == ‘\0’)<br>{<br>g_nStatus = kValid;<br>}<br>return num;<br>}<br>}</p>
-<p>###Q50：树中两个结点的最低公共祖先<br>情况一：二叉搜索树<br>情况二：普通的树有指向父亲结点的指针（转换成类似Q37的题目）<br>情况三：普通的树没有指向父亲结点的指针（可以考虑辅助内存，遍历两次树，时间复杂度O(n)，空间复杂度O(logn)）</p>
-<p>###C++语法补充</p>
-<ol>
+<h3 id="Q50_uFF1A_u6811_u4E2D_u4E24_u4E2A_u7ED3_u70B9_u7684_u6700_u4F4E_u516C_u5171_u7956_u5148"><a href="#Q50_uFF1A_u6811_u4E2D_u4E24_u4E2A_u7ED3_u70B9_u7684_u6700_u4F4E_u516C_u5171_u7956_u5148" class="headerlink" title="Q50：树中两个结点的最低公共祖先"></a>Q50：树中两个结点的最低公共祖先</h3><p>情况一：二叉搜索树<br>情况二：普通的树有指向父亲结点的指针（转换成类似Q37的题目）<br>情况三：普通的树没有指向父亲结点的指针（可以考虑辅助内存，遍历两次树，时间复杂度O(n)，空间复杂度O(logn)）</p>
+<h3 id="C++_u8BED_u6CD5_u8865_u5145"><a href="#C++_u8BED_u6CD5_u8865_u5145" class="headerlink" title="C++语法补充"></a>C++语法补充</h3><ol>
 <li>含有指针成员的类一般要自己写拷贝构造函数或者拷贝运算符的重载函数，否则在编译器生成的缺省的构造拷贝函数和拷贝运算符的重载函数，对指针实行的是按位拷贝，仅仅是拷贝指针的地址，而不会拷贝指针的内容。另一种解决办法是禁用这两个函数，如果类的用户企图调用这两个函数，将不能通过编译。实现的代码如下：</li>
 </ol>
 <p>private:<br>Array(const Array&amp; copy);<br>const Array&amp; operator=(const Array&amp; copy);</p>
@@ -483,7 +477,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目錄</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5251_u6307offer_u7B14_u8BB0"><span class="nav-number">1.</span> <span class="nav-text">剑指offer笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1_uFF1A_u8D4B_u503C_u8FD0_u7B97_u7B26_u51FD_u6570"><span class="nav-number">1.1.</span> <span class="nav-text">Q1：赋值运算符函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4_uFF1A_u66FF_u6362_u7A7A_u683C"><span class="nav-number">1.2.</span> <span class="nav-text">Q4：替换空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6_uFF1A_u91CD_u5EFA_u4E8C_u53C9_u6811"><span class="nav-number">1.3.</span> <span class="nav-text">Q6：重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q7_uFF1A_u7528_u4E24_u4E2A_u6808_u5B9E_u73B0_u961F_u5217"><span class="nav-number">1.4.</span> <span class="nav-text">Q7：用两个栈实现队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q9_3A__u6590_u6CE2_u90A3_u5951_u6570_u5217"><span class="nav-number">1.5.</span> <span class="nav-text">Q9: 斐波那契数列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q11_uFF1A_u6570_u503C_u7684_u6574_u6570_u6B21_u65B9"><span class="nav-number">1.6.</span> <span class="nav-text">Q11：数值的整数次方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q18_uFF1A_u6811_u7684_u5B50_u7ED3_u6784"><span class="nav-number">1.7.</span> <span class="nav-text">Q18：树的子结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q21_uFF1A_u5305_u542Bmin_u51FD_u6570_u7684_u6808"><span class="nav-number">1.8.</span> <span class="nav-text">Q21：包含min函数的栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q24_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u7684_u540E_u5E8F_u904D_u5386_u5E8F_u5217"><span class="nav-number">1.9.</span> <span class="nav-text">Q24：二叉搜索树的后序遍历序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q25_uFF1A_u4E8C_u53C9_u6811_u4E2D_u548C_u4E3A_u67D0_u4E00_u503C_u5F97_u8DEF_u5F84"><span class="nav-number">1.10.</span> <span class="nav-text">Q25：二叉树中和为某一值得路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q27_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u4E0E_u53CC_u5411_u94FE_u8868"><span class="nav-number">1.11.</span> <span class="nav-text">Q27：二叉搜索树与双向链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q28_uFF1A_u5B57_u7B26_u4E32_u7684_u6392_u5217"><span class="nav-number">1.12.</span> <span class="nav-text">Q28：字符串的排列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q30_uFF1A_u6700_u5C0F_u7684k_u4E2A_u6570"><span class="nav-number">1.13.</span> <span class="nav-text">Q30：最小的k个数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q36_uFF1A_u6570_u7EC4_u4E2D_u7684_u9006_u5E8F_u5BF9"><span class="nav-number">1.14.</span> <span class="nav-text">Q36：数组中的逆序对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q37_uFF1A_u4E24_u4E2A_u94FE_u8868_u7684_u7B2C_u4E00_u4E2A_u516C_u5171_u7ED3_u70B9"><span class="nav-number">1.15.</span> <span class="nav-text">Q37：两个链表的第一个公共结点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q39_uFF1A_u4E8C_u53C9_u6811_u7684_u6DF1_u5EA6"><span class="nav-number">1.16.</span> <span class="nav-text">Q39：二叉树的深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q40_uFF1A_u6570_u7EC4_u4E2D_u53EA_u51FA_u73B0_u4E00_u6B21_u7684_u6570_u5B57"><span class="nav-number">1.17.</span> <span class="nav-text">Q40：数组中只出现一次的数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q41_uFF1A_u548C_u4E3As_u7684_u4E24_u4E2A_u6570_u5B57-_26gt_3B_u548C_u4E3As_u7684_u8FDE_u7EED_u6B63_u6574_u6570_u5E8F_u5217"><span class="nav-number">1.18.</span> <span class="nav-text">Q41：和为s的两个数字->和为s的连续正整数序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q42_uFF1A_u7FFB_u8F6C_u5355_u8BCD_u987A_u5E8F-_26gt_3B_u5DE6_u65CB_u8F6C_u5B57_u7B26_u4E32"><span class="nav-number">1.19.</span> <span class="nav-text">Q42：翻转单词顺序->左旋转字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q43_uFF1An_u4E2A_u9AB0_u5B50_u7684_u70B9_u6570"><span class="nav-number">1.20.</span> <span class="nav-text">Q43：n个骰子的点数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q49_uFF1A_u628A_u5B57_u7B26_u4E32_u8F6C_u6362_u6210_u6574_u6570"><span class="nav-number">1.21.</span> <span class="nav-text">Q49：把字符串转换成整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q50_uFF1A_u6811_u4E2D_u4E24_u4E2A_u7ED3_u70B9_u7684_u6700_u4F4E_u516C_u5171_u7956_u5148"><span class="nav-number">1.22.</span> <span class="nav-text">Q50：树中两个结点的最低公共祖先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C++_u8BED_u6CD5_u8865_u5145"><span class="nav-number">1.23.</span> <span class="nav-text">C++语法补充</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
