@@ -212,6 +212,181 @@
             
               
                 
+                <a class="post-title-link" href="/2016/02/22/Note-for-剑指offer/" itemprop="url">
+                  Note for 剑指offer
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-02-22T23:27:18+08:00" content="2016-02-22">
+              2016-02-22
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##剑指offer笔记</p>
+<p>###Q1：赋值运算符函数<br>为class CMyString添加赋值运算符函数<br>注意点：</p>
+<ol>
+<li>是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。</li>
+<li>是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）</li>
+<li>是否释放实例自身已有的内存（如果在分配新内存之前不释放自己已有的空间，将内存泄露）</li>
+<li>是否判断传入的参数和当前的实例（*this）是不是同一个实例。</li>
+</ol>
+<p>初级解法：</p>
+<p>CMyString&amp; CMyString::operator=(const CMyString &amp;str)<br>{<br>if(this == &amp;str)<br>return <em>this;<br>delete []m_pData;<br>m_pData = NULL;<br>m_pData = new char[strlen(str.m_pData) + 1];<br>strcpy(m_pData, str.m_pData);<br>return </em>this;<br>}</p>
+<p>高级解法：考虑异常安全性（Exception Safety）<br>如果由于内存不足导致new char抛出异常，m_pData将是一个空指针，违背Exception Safety原则<br>两个解决方法：</p>
+<ol>
+<li>先用new分配内存再delete释放已有的内容，这样分配失败时未满能确保CMyString的实例不会被修改</li>
+<li>先创建一个临时实例，再交换临时实例和原来的实例：</li>
+</ol>
+<p>方法2参考代码：</p>
+<p>CMyString&amp; CMyString::operator=(const CMyString &amp;str)<br>{<br>if(this != &amp;str)<br>{<br>CMyString strTemp(str);<br>char <em> pTemp = str.m_pData;<br>strTemp.m_pData = m_pData;<br>m_pData = pTemp;<br>}<br>return </em>this;<br>}</p>
+<p>注：程序运行到if外面就出了该变量的作用域，自动调用strTemp的析构函数</p>
+<p>###Q4：替换空格</p>
+<p>实现一个函数，把字符串中的每个空格替换成”%20”</p>
+<p>暴力：O(n<sup>2</sup>)<br>O(n)方法：从尾部开始遍历</p>
+<p>举一反三：合并两个数组时，可以考虑从后往前复制</p>
+<p>###Q6：重建二叉树<br>输入二叉树的前序遍历和中序遍历的结果，重建出该二叉树。</p>
+<p>###Q7：用两个栈实现队列<br>用两个栈实现队列的两个函数appendTail和deleteHead</p>
+<p>举一反三：用两个队列实现一个栈</p>
+<p>###Q9: 斐波那契数列<br>求Fibonacci数列的第n项</p>
+<p>用递归的方法计算的时间复杂度是以n的指数的方式递增的<br>改进：保存数列中间项，如果下次需要计算的时候先查找一下<br>另解：从下往上算，无需保存数列</p>
+<p>补充：时间复杂度O(logn)但不够使用过的方法<br>利用斐波那契矩阵公式和二分法求乘方</p>
+<p>Q10：二进制中1的个数</p>
+<p>输入一个整数，输出该数二进制表示中1的个数<br>版本一：可能引起死循环（why?）</p>
+<p>int NumberOf1(int n)<br>{<br>int count = 0;<br>while(n)<br>{<br>if(n&amp;1)<br>count++;<br>n = n &gt;&gt; 1;<br>}<br>return count;<br>}<br>//用位移和与运算代替除法和取余优化速度</p>
+<p>版本二：</p>
+<p>int NumberOf1(int n)<br>{<br>int count = 0;<br>unsigned int flag = 1;<br>while(flag)<br>{<br>if(n &amp; flag)<br>count ++;<br>flag = flag &lt;&lt; 1;<br>}<br>return count;<br>}<br>版本三:</p>
+<p>int NumberOf1(int n)<br>{<br>int count = 0;<br>while(n)<br>{<br>++ count;<br>n = (n-1) &amp; n;<br>}<br>return count;<br>}</p>
+<p>###Q11：数值的整数次方<br>实现函数double Power(double base, int exponent)，不需考虑大数问题。<br>全面而高效的解法：</p>
+<p>bool g_invalidInput = false;<br>double Power(double base, int exponent)<br>{<br>g_InvalidInput = false;<br>if(equal(base,0,0) &amp;&amp; exponent &lt; 0)<br>{<br>g_InvalidInput = true;<br>return 0.0;<br>}<br>unsigned int absExpoent = (unsigned int)(exponent);<br>if(exponent &lt; 0)<br>absExponent = (unsigned int)(-exponent);<br>double result = PowerWithUnsignedExponent(base, absExponent);<br>if(exponent &lt; 0)<br>result = 1.0/result;<br>return result;<br>}</p>
+<p>duoble PowerWithUnsignedExponent(double base, unsigned int exponent)<br>{<br>if(exponent == 0 )<br>return 1;<br>if(exponent == 1 )<br>return base;</p>
+<p>double result = PowerWithUnsignedExponent(base,exponent&gt;&gt;1);<br>result <em>= result;<br>if(exponent &amp; 0x1 == 1)<br>result </em>= base;<br>return result;<br>}</p>
+<p>bool equal(double num1, double num2)<br>{<br>if((num1-num2 &gt; -0.00000001)<br>&amp;&amp; (num1 -num2 &lt; 0.00000001))<br>return true;<br>else<br>return false;<br>}</p>
+<p>###Q18：树的子结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#20004;&#26869;&#20108;&#21449;&#26641;A&#21644;B&#65292;&#21028;&#26029;B&#26159;&#19981;&#26159;A&#30340;&#23376;&#32467;&#26500;&#65292;&#20108;&#21449;&#26641;&#32467;&#28857;&#23450;&#20041;&#22914;&#19979;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>struct BinaryTreeNode<br>{<br>int m_nValue;<br>BinaryTreeNode<em> m_pLeft;<br>BinaryTreeNode</em> m_pRight;<br>}</p>
+<p>核心代码：</p>
+<p>bool HasSubtree(BinaryTreeNOde<em> pRoot1, BinaryTreeNode</em> pRoot2)<br>{<br>bool result = false;<br>if(pRoot1 != NULL &amp;&amp; pRoot2 != NULL)<br>{<br>if(pRoot1-&gt;m_nValue == pRoot2-&gt;m_nValue)<br>result = DoesTree1HaveTree2(pRoot1,pRoot2);<br>if(!result)<br>result = HasSubtree(pRoot1-&gt;m_pLeft,pRoot2);<br>if(!result)<br>result = HasSubtree(pRoot1-&gt;mRight,pRoot2);<br>}<br>return result;<br>}</p>
+<p>###Q21：包含min函数的栈<br>定义栈的数据结构， 能在O(1)复杂度能得到栈的最小元素<br>提示：构造辅助栈</p>
+<p>###Q24：二叉搜索树的后序遍历序列<br>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。假设输入的数组的任意两个数字不相同。<br>类似的：前序遍历<br>方法参考Q6</p>
+<p>###Q25：二叉树中和为某一值得路径<br>输入一棵二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。从树的根结点开始往下一直到叶子结点所经过的结点形成一条路径。<br>ps：如果结点没有指向父结点的职责恩，我们可以在遍历的时候用一个栈lai来保存从根结点到当前结点的路径</p>
+<p>###Q27：二叉搜索树与双向链表<br>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点。<br>参考代码如下：</p>
+<p>BinaryTreeNode<em> Convert(BinaryTreeNode</em> pRootOfTree)<br>{<br>BinaryTreeNode *pLastNodeInList = NULL;<br>ConvertNode(pRootOfTree,&amp;pLastNodeInList);</p>
+<p>//通过尾结点得到头结点<br>BinaryTreeNode *pHeadOfList =pLastNodeInList;<br>while(pHeadOfList != NULL &amp;&amp; pHeadOfList -&gt; m_pLeft != NULL)<br>pHeadOfList = pHeadOfList-&gt;m_pList;<br>return pHeadOfList;<br>}</p>
+<p>void ConvertNode(BinaryTreeNode<em> pNode, BinaryTreeNode** pLastNodeInList)<br>{<br>if(pNode == NULL)<br>return;<br>BinaryTreeNode </em> pCurrent = pNode;<br>if(pCurrent-&gt;m_pLeft!=NULL)<br>ConvertNode(pCurrent-&gt;m_pLeft,pLastNodeInList);</p>
+<p>pCurrent-&gt;m_pLeft = <em>pLastNodeInList;<br>if(</em>pLastNodeInList != NULL)<br>(*pLastNodeInList)-&gt;m_pRight = pCurrent;</p>
+<p>*pLastNodeInList = pCurrent;</p>
+<p>if(pCurrent-&gt;m_pRight != NULL)<br>ConvertNode(pCurrent-&gt;m_pRight, pLastNodeInList);<br>}</p>
+<p>###Q28：字符串的排列<br>输入一个字符串，打印出该字符串中字符的所有排列<br>参考代码：</p>
+<p>void Permutation(char* pStr)<br>{<br>if(pStr == NULL)<br>return;<br>Permutation(pStr,pStr);<br>}</p>
+<p>void Permutation(char<em> pStr, char</em> pBegin)<br>{<br>if(<em>pBegin == ‘\0’)<br>printf(“%s\n”,pStr);<br>else<br>{<br>for(char</em> pCh = pBegin; <em>pCh != ‘\0’; ++ pCh)<br>{<br>char temp = </em>pCh;<br><em>pCh = </em>pBegin;<br><em>pBegin = temp;<br>Permutation(pStr,pBegin + 1);<br>temp = </em>pCh;<br><em>pCh = </em>pBegin;<br>*pBegin = temp;<br>}<br>}<br>}<br>举一反三：求字符的所有组合（比如输入三个字符a、b、c，则他们的组合有a、b、c、ab、ac、bc、abc）</p>
+<p>提示：在求n个字符的长度为m的组合的时候，分别求n-1个字符串中长度为m-1的组合，以及求n-1个字符的长度为m的组合。</p>
+<p>###Q30：最小的k个数<br>输入n个整数，找出其中的最小的k个数。</p>
+<p>解法一：基于Partition函数的方法，O(n)</p>
+<p>//实现快速排序的关键：先在数组中选择一个数字，接下来把数组中的数字分为两部分，比选择的数字小的数字移到数组的左边，比选择的数字大的数字移到数组的右边。<br>int Partition(int data[], int length, int start, int end)<br>{<br>if(data == NULL || length &lt;= 0 || start <0 ||="" end="">= length)<br>throw new std::exception(“Invalid Parameters”);<br>int index = RandomInRange(start, end);<br>Swap(&amp;data[index],&amp;data[end]);</0></p>
+<p>int small = start - 1;<br>for(index = start; index &lt; end; ++ index)<br>{<br>if(data[index]&lt;data[end])<br>{<br>++ small;<br>if(small != index)<br>Swap(&amp;data[index],&amp;data[small]);<br>}<br>}_<br>++small;<br>Swape(&amp;data[small],&amp;data[end]);<br>return small;<br>}<br>解法二：维护一个最大堆（放k个数的容器，在O(1)时间找到最大值，O(logn)时间删除最大数，插入新的数字），复杂度O(nlogn)<br>两个优点：</p>
+<ol>
+<li>没有修改输入的数据</li>
+<li>只要求内存能容纳k个数，不必把n个数据一次载入内存，适合海量数据的输入</li>
+</ol>
+<p>###Q36：数组中的逆序对<br>在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。<br>提示：类似于归并排序</p>
+<p>###Q37：两个链表的第一个公共结点<br>输入两个链表，找出他们的第一个公共结点<br>暴力：O(mn)<br>构造两个辅助栈，从后往前找：O(m+n)<br>优化：先遍历一次找出长度的差值，第二次遍历时，较长的链表先走那么多步，再同时遍历，O(m+n)</p>
+<p>###Q39：二叉树的深度<br>输入一棵二叉树的根结点，求该树的深度。</p>
+<p>引申：输入一棵二叉树的根结点，判断该树是不是平衡二叉树。</p>
+<p>方法一：</p>
+<p>bool IsBalanced(BinaryTreeNode* pRoot)<br>{<br>if(pRoot == NULL)<br>return true;<br>int left = TreeDepth(pRoot-&gt;m_pLeft);<br>int right = TreeDepth(pRoot-&gt;m_pRight);<br>int diff = left -right;<br>if(diff &gt; 1 || diff &lt; -1)<br>return false;<br>return IsBalanced(pRoot-&gt;m_pLeft) &amp;&amp; IsBalanced(pRoot-&gt;m_pRight);<br>}<br>每个节点都会被重复遍历多次，效率不高</p>
+<p>方法二：</p>
+<p>bool IsBalanced(BinaryTreeNOde<em> pRoot, int</em> pDepth)<br>{<br>if(pRoot == NULL)<br>{<br><em>pDepth = 0;<br>return true;<br>}<br>int left,right;<br>if(IsBalanced(pRoot-&gt;m_pLeft,&amp;left)&amp;&amp;IsBalanced(pRoot-&gt;m_pRight,&amp;right))<br>{<br>int diff = left - right;<br>if(diff &lt;= 1 &amp;&amp; diff &gt;= -1)<br>{
+</em>pDepht = 1 + (left &gt; right ? left : right);<br>return true;_<br>}<br>}<br>return false;<br>}<br>我们只需给上面的函数传入二叉树的根结点及一个表示结点深度的整型变量即可：</p>
+<p>bool IsBalanced(BinaryTreeNode* pRoot)<br>{<br>int depth = 0;<br>return IsBalanced(pRoot, &amp;depth);<br>}_</p>
+<p>###Q40：数组中只出现一次的数字<br>一个整型数组里除了两个数字之外，其他的数字都出现两次。找出这连个只出现一次的数字。要求时间复杂度是O(n)，空间复杂度是O(1)。<br>提示：异或的性质<br>全部取异或之后按第一个1的位置是不是1将原数组中的数字分为两个子数组，在分别异或。</p>
+<p>###Q41：和为s的两个数字-&gt;和为s的连续正整数序列<br>输入一个地震排序的数组和一个数字s，在数组中查找两个数，使得他们的和正好是s。如果有多对数字的和是s，输出任意一对即可。<br>规律：O(n)复杂度，一般都要想出两个指针来做<br>变式：输入一个整数s，打印出所有和为s的连续正整数序列（至少有两个数）</p>
+<p>###Q42：翻转单词顺序-&gt;左旋转字符串<br>输入一个英文句子，翻转单词的顺序，但单词内字符的顺序不变。</p>
+<p>变式：定义一个函数实现字符串左旋转的功劳，比如输入字符串”abcdefg”和数字2，该函数将返回左旋转2位得到的结果”cdefgab”。</p>
+<p>###Q43：n个骰子的点数<br>把n个骰子扔在地上，所有骰子朝上一面的点数之和为s，输入n，打印s的所有可能的值出现的概率。</p>
+<p>###Q49：把字符串转换成整数<br>enum StatusP{kValid = 0, kInvalid};<br>int g_nStatus = kValid;<br>int StrToInt(const char<em> str)<br>{<br>g_nStatus = kInvalid;<br>long long num = 0;<br>if(str != NULL &amp;&amp; </em>str != ‘\0’)<br>{<br>bool minus = false;<br>if(<em>str == ‘+’)<br>str++;<br>else if(</em>str == ‘-‘)<br>{<br>str ++;<br>minus = true;<br>}<br>if(*str != ‘\0’)<br>{<br>num = StrToIntCore(str,minus);<br>}<br>}<br>return (int)num;<br>}</p>
+<p>long long StrToIntCore(const char<em> digit, bool minus)<br>{<br>long long num = 0;<br>while(</em>digit != ‘\0’)<br>{<br>if(<em>digit &gt;= ‘0’ &amp;&amp; </em>digit &lt;= ‘9’)<br>{<br>int flag = minus?-1:1;<br>num = num <em> 10 + flag </em> (<em>digit - ‘0’);<br>if((!minus &amp;&amp; num &gt; 0x7FFFFFFF)<br>|| (minus &amp;&amp; num &lt; (signed int)0x80000000))<br>{<br>num = 0;<br>break;<br>}<br>digit++;<br>}<br>else<br>{<br>num ++;<br>break;<br>}<br>if(</em>digit == ‘\0’)<br>{<br>g_nStatus = kValid;<br>}<br>return num;<br>}<br>}</p>
+<p>###Q50：树中两个结点的最低公共祖先<br>情况一：二叉搜索树<br>情况二：普通的树有指向父亲结点的指针（转换成类似Q37的题目）<br>情况三：普通的树没有指向父亲结点的指针（可以考虑辅助内存，遍历两次树，时间复杂度O(n)，空间复杂度O(logn)）</p>
+<p>###C++语法补充</p>
+<ol>
+<li>含有指针成员的类一般要自己写拷贝构造函数或者拷贝运算符的重载函数，否则在编译器生成的缺省的构造拷贝函数和拷贝运算符的重载函数，对指针实行的是按位拷贝，仅仅是拷贝指针的地址，而不会拷贝指针的内容。另一种解决办法是禁用这两个函数，如果类的用户企图调用这两个函数，将不能通过编译。实现的代码如下：</li>
+</ol>
+<p>private:<br>Array(const Array&amp; copy);<br>const Array&amp; operator=(const Array&amp; copy);</p>
+<ol>
+<li>const和static不能同时修饰类的成员函数。C++编译器在实现const的成员函数的时候为了确保该函数不能修改类的实例的状态，会在函数中添加一个隐式的const this*。但当一个成员为static的时候，该函数是没有this指针的。</li>
+<li>C++中，成员变量的初始化顺序只与它们在类中声明的顺序有关，而与在初始化列表中的顺序无关。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/02/10/Classification-Retrieval/" itemprop="url">
                   Classification_Retrieval
                 </a>
@@ -823,7 +998,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
