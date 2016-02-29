@@ -189,6 +189,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
 
     
       
@@ -212,8 +221,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/02/22/Note-for-剑指offer/" itemprop="url">
-                  Note for 剑指offer
+                <a class="post-title-link" href="/2016/02/28/resnet-mxnet/" itemprop="url">
+                  resnet-mxnet
                 </a>
               
             
@@ -226,8 +235,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-02-22T23:27:18+08:00" content="2016-02-22">
-              2016-02-22
+            <time itemprop="dateCreated" datetime="2016-02-28T21:55:04+08:00" content="2016-02-28">
+              2016-02-28
             </time>
           </span>
 
@@ -235,487 +244,12 @@
 
           
             
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="u5251_u6307offer_u7B14_u8BB0"><a href="#u5251_u6307offer_u7B14_u8BB0" class="headerlink" title="剑指offer笔记"></a>剑指offer笔记</h2><h3 id="Q1_uFF1A_u8D4B_u503C_u8FD0_u7B97_u7B26_u51FD_u6570"><a href="#Q1_uFF1A_u8D4B_u503C_u8FD0_u7B97_u7B26_u51FD_u6570" class="headerlink" title="Q1：赋值运算符函数"></a>Q1：赋值运算符函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20026;class CMyString&#28155;&#21152;&#36171;&#20540;&#36816;&#31639;&#31526;&#20989;&#25968;</span><br></pre></td></tr></table></figure>
-<p>注意点：</p>
-<ol>
-<li>是否把返回值得类型声明为该类型的引用，并在函数结束前返回实例自身的引用（即*this）。</li>
-<li>是否把传入的参数的类型声明为常量引用（如果不是引用而是实例，形参到实参会调用一次复制构造函数，造成无谓消耗）</li>
-<li>是否释放实例自身已有的内存（如果在分配新内存之前不释放自己已有的空间，将内存泄露）</li>
-<li>是否判断传入的参数和当前的实例（*this）是不是同一个实例。</li>
-</ol>
-<p>初级解法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMyString&#38; CMyString::operator=(const CMyString &#38;str)&#10;&#123;&#10;if(this == &#38;str)&#10;return *this;&#10;delete []m_pData;&#10;m_pData = NULL;&#10;m_pData = new char[strlen(str.m_pData) + 1];&#10;strcpy(m_pData, str.m_pData);&#10;return *this;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>高级解法：考虑异常安全性（Exception Safety）<br>如果由于内存不足导致new char抛出异常，m_pData将是一个空指针，违背Exception Safety原则<br>两个解决方法：</p>
-<ol>
-<li>先用new分配内存再delete释放已有的内容，这样分配失败时未满能确保CMyString的实例不会被修改</li>
-<li>先创建一个临时实例，再交换临时实例和原来的实例：</li>
-</ol>
-<p>方法2参考代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMyString&#38; CMyString::operator=(const CMyString &#38;str)&#10;&#123;&#10;if(this != &#38;str)&#10;&#123;&#10;CMyString strTemp(str);&#10;char * pTemp = str.m_pData;&#10;strTemp.m_pData = m_pData;&#10;m_pData = pTemp;&#10;&#125;&#10;return *this;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注：程序运行到if外面就出了该变量的作用域，自动调用strTemp的析构函数</p>
-<h3 id="Q4_uFF1A_u66FF_u6362_u7A7A_u683C"><a href="#Q4_uFF1A_u66FF_u6362_u7A7A_u683C" class="headerlink" title="Q4：替换空格"></a>Q4：替换空格</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23454;&#29616;&#19968;&#20010;&#20989;&#25968;&#65292;&#25226;&#23383;&#31526;&#20018;&#20013;&#30340;&#27599;&#20010;&#31354;&#26684;&#26367;&#25442;&#25104;&#34;%20&#34;</span><br></pre></td></tr></table></figure>
-<p>暴力：O(n<sup>2</sup>)<br>O(n)方法：从尾部开始遍历</p>
-<p>举一反三：合并两个数组时，可以考虑从后往前复制</p>
-<h3 id="Q6_uFF1A_u91CD_u5EFA_u4E8C_u53C9_u6811"><a href="#Q6_uFF1A_u91CD_u5EFA_u4E8C_u53C9_u6811" class="headerlink" title="Q6：重建二叉树"></a>Q6：重建二叉树</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#20108;&#21449;&#26641;&#30340;&#21069;&#24207;&#36941;&#21382;&#21644;&#20013;&#24207;&#36941;&#21382;&#30340;&#32467;&#26524;&#65292;&#37325;&#24314;&#20986;&#35813;&#20108;&#21449;&#26641;&#12290;</span><br></pre></td></tr></table></figure>
-<h3 id="Q7_uFF1A_u7528_u4E24_u4E2A_u6808_u5B9E_u73B0_u961F_u5217"><a href="#Q7_uFF1A_u7528_u4E24_u4E2A_u6808_u5B9E_u73B0_u961F_u5217" class="headerlink" title="Q7：用两个栈实现队列"></a>Q7：用两个栈实现队列</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#29992;&#20004;&#20010;&#26632;&#23454;&#29616;&#38431;&#21015;&#30340;&#20004;&#20010;&#20989;&#25968;appendTail&#21644;deleteHead</span><br></pre></td></tr></table></figure>
-<p>举一反三：用两个队列实现一个栈</p>
-<h3 id="Q9_3A__u6590_u6CE2_u90A3_u5951_u6570_u5217"><a href="#Q9_3A__u6590_u6CE2_u90A3_u5951_u6570_u5217" class="headerlink" title="Q9: 斐波那契数列"></a>Q9: 斐波那契数列</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#27714;Fibonacci&#25968;&#21015;&#30340;&#31532;n&#39033;</span><br></pre></td></tr></table></figure>
-<p>用递归的方法计算的时间复杂度是以n的指数的方式递增的<br>改进：保存数列中间项，如果下次需要计算的时候先查找一下<br>另解：从下往上算，无需保存数列</p>
-<p>补充：时间复杂度O(logn)但不够使用过的方法<br>利用斐波那契矩阵公式和二分法求乘方</p>
-<p>Q10：二进制中1的个数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#20010;&#25972;&#25968;&#65292;&#36755;&#20986;&#35813;&#25968;&#20108;&#36827;&#21046;&#34920;&#31034;&#20013;1&#30340;&#20010;&#25968;</span><br></pre></td></tr></table></figure></p>
-<p>版本一：可能引起死循环（why?）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int NumberOf1(int n)&#10;&#123;&#10;int count = 0;&#10;while(n)&#10;&#123;&#10;if(n&#38;1)&#10;count++;&#10;n = n &#62;&#62; 1;&#10;&#125;&#10;return count;&#10;&#125;&#10;//&#29992;&#20301;&#31227;&#21644;&#19982;&#36816;&#31639;&#20195;&#26367;&#38500;&#27861;&#21644;&#21462;&#20313;&#20248;&#21270;&#36895;&#24230;</span><br></pre></td></tr></table></figure></p>
-<p>版本二：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int NumberOf1(int n)&#10;&#123;&#10;int count = 0;&#10;unsigned int flag = 1;&#10;while(flag)&#10;&#123;&#10;if(n &#38; flag)&#10;count ++;&#10;flag = flag &#60;&#60; 1;&#10;&#125;&#10;return count;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>版本三:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int NumberOf1(int n)&#10;&#123;&#10;int count = 0;&#10;while(n)&#10;&#123;&#10;++ count;&#10;n = (n-1) &#38; n;&#10;&#125;&#10;return count;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Q11_uFF1A_u6570_u503C_u7684_u6574_u6570_u6B21_u65B9"><a href="#Q11_uFF1A_u6570_u503C_u7684_u6574_u6570_u6B21_u65B9" class="headerlink" title="Q11：数值的整数次方"></a>Q11：数值的整数次方</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23454;&#29616;&#20989;&#25968;double Power(double base, int exponent)&#65292;&#19981;&#38656;&#32771;&#34385;&#22823;&#25968;&#38382;&#39064;&#12290;&#10;&#20840;&#38754;&#32780;&#39640;&#25928;&#30340;&#35299;&#27861;&#65306;</span><br></pre></td></tr></table></figure>
-<p>bool g_invalidInput = false;<br>double Power(double base, int exponent)<br>{<br>g_InvalidInput = false;<br>if(equal(base,0,0) &amp;&amp; exponent &lt; 0)<br>{<br>g_InvalidInput = true;<br>return 0.0;<br>}<br>unsigned int absExpoent = (unsigned int)(exponent);<br>if(exponent &lt; 0)<br>absExponent = (unsigned int)(-exponent);<br>double result = PowerWithUnsignedExponent(base, absExponent);<br>if(exponent &lt; 0)<br>result = 1.0/result;<br>return result;<br>}</p>
-<p>duoble PowerWithUnsignedExponent(double base, unsigned int exponent)<br>{<br>if(exponent == 0 )<br>return 1;<br>if(exponent == 1 )<br>return base;</p>
-<p>double result = PowerWithUnsignedExponent(base,exponent&gt;&gt;1);<br>result <em>= result;<br>if(exponent &amp; 0x1 == 1)<br>result </em>= base;<br>return result;<br>}</p>
-<p>bool equal(double num1, double num2)<br>{<br>if((num1-num2 &gt; -0.00000001)<br>&amp;&amp; (num1 -num2 &lt; 0.00000001))<br>return true;<br>else<br>return false;<br>}</p>
-<h3 id="Q18_uFF1A_u6811_u7684_u5B50_u7ED3_u6784"><a href="#Q18_uFF1A_u6811_u7684_u5B50_u7ED3_u6784" class="headerlink" title="Q18：树的子结构"></a>Q18：树的子结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#20004;&#26869;&#20108;&#21449;&#26641;A&#21644;B&#65292;&#21028;&#26029;B&#26159;&#19981;&#26159;A&#30340;&#23376;&#32467;&#26500;&#65292;&#20108;&#21449;&#26641;&#32467;&#28857;&#23450;&#20041;&#22914;&#19979;&#65306;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">struct BinaryTreeNode&#10;&#123;&#10;int m_nValue;&#10;BinaryTreeNode* m_pLeft;&#10;BinaryTreeNode* m_pRight;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>核心代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool HasSubtree(BinaryTreeNOde* pRoot1, BinaryTreeNode* pRoot2)&#10;&#123;&#10;bool result = false;&#10;if(pRoot1 != NULL &#38;&#38; pRoot2 != NULL)&#10;&#123;&#10;if(pRoot1-&#62;m_nValue == pRoot2-&#62;m_nValue)&#10;result = DoesTree1HaveTree2(pRoot1,pRoot2);&#10;if(!result)&#10;result = HasSubtree(pRoot1-&#62;m_pLeft,pRoot2);&#10;if(!result)&#10;result = HasSubtree(pRoot1-&#62;mRight,pRoot2);&#10;&#125;&#9;&#10;return result;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Q21_uFF1A_u5305_u542Bmin_u51FD_u6570_u7684_u6808"><a href="#Q21_uFF1A_u5305_u542Bmin_u51FD_u6570_u7684_u6808" class="headerlink" title="Q21：包含min函数的栈"></a>Q21：包含min函数的栈</h3><p>定义栈的数据结构， 能在O(1)复杂度能得到栈的最小元素<br>提示：构造辅助栈</p>
-<h3 id="Q24_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u7684_u540E_u5E8F_u904D_u5386_u5E8F_u5217"><a href="#Q24_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u7684_u540E_u5E8F_u904D_u5386_u5E8F_u5217" class="headerlink" title="Q24：二叉搜索树的后序遍历序列"></a>Q24：二叉搜索树的后序遍历序列</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。假设输入的数组的任意两个数字不相同。<br>类似的：前序遍历<br>方法参考Q6</p>
-<h3 id="Q25_uFF1A_u4E8C_u53C9_u6811_u4E2D_u548C_u4E3A_u67D0_u4E00_u503C_u5F97_u8DEF_u5F84"><a href="#Q25_uFF1A_u4E8C_u53C9_u6811_u4E2D_u548C_u4E3A_u67D0_u4E00_u503C_u5F97_u8DEF_u5F84" class="headerlink" title="Q25：二叉树中和为某一值得路径"></a>Q25：二叉树中和为某一值得路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#26869;&#20108;&#21449;&#26641;&#21644;&#19968;&#20010;&#25972;&#25968;&#65292;&#25171;&#21360;&#20986;&#20108;&#21449;&#26641;&#20013;&#32467;&#28857;&#20540;&#30340;&#21644;&#20026;&#36755;&#20837;&#25972;&#25968;&#30340;&#25152;&#26377;&#36335;&#24452;&#12290;&#20174;&#26641;&#30340;&#26681;&#32467;&#28857;&#24320;&#22987;&#24448;&#19979;&#19968;&#30452;&#21040;&#21494;&#23376;&#32467;&#28857;&#25152;&#32463;&#36807;&#30340;&#32467;&#28857;&#24418;&#25104;&#19968;&#26465;&#36335;&#24452;&#12290;</span><br></pre></td></tr></table></figure>
-<p>ps：如果结点没有指向父结点的职责恩，我们可以在遍历的时候用一个栈lai来保存从根结点到当前结点的路径</p>
-<h3 id="Q27_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u4E0E_u53CC_u5411_u94FE_u8868"><a href="#Q27_uFF1A_u4E8C_u53C9_u641C_u7D22_u6811_u4E0E_u53CC_u5411_u94FE_u8868" class="headerlink" title="Q27：二叉搜索树与双向链表"></a>Q27：二叉搜索树与双向链表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#26869;&#20108;&#21449;&#25628;&#32034;&#26641;&#65292;&#23558;&#35813;&#20108;&#21449;&#25628;&#32034;&#26641;&#36716;&#25442;&#25104;&#19968;&#20010;&#25490;&#24207;&#30340;&#21452;&#21521;&#38142;&#34920;&#12290;&#35201;&#27714;&#19981;&#33021;&#21019;&#24314;&#20219;&#20309;&#26032;&#30340;&#32467;&#28857;&#12290;</span><br></pre></td></tr></table></figure>
-<p>参考代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BinaryTreeNode* Convert(BinaryTreeNode* pRootOfTree)&#10;&#123;&#10;BinaryTreeNode *pLastNodeInList = NULL;&#10;ConvertNode(pRootOfTree,&#38;pLastNodeInList);&#10;&#10;//&#36890;&#36807;&#23614;&#32467;&#28857;&#24471;&#21040;&#22836;&#32467;&#28857;&#10;BinaryTreeNode *pHeadOfList =pLastNodeInList;&#10;while(pHeadOfList != NULL &#38;&#38; pHeadOfList -&#62; m_pLeft != NULL)&#10;pHeadOfList = pHeadOfList-&#62;m_pList;&#10;return pHeadOfList;&#10;&#125;&#10;&#10;void ConvertNode(BinaryTreeNode* pNode, BinaryTreeNode** pLastNodeInList)&#10;&#123;&#10;if(pNode == NULL)&#10;return;&#10;BinaryTreeNode * pCurrent = pNode;&#10;if(pCurrent-&#62;m_pLeft!=NULL)&#10;ConvertNode(pCurrent-&#62;m_pLeft,pLastNodeInList);&#10;&#10;pCurrent-&#62;m_pLeft = *pLastNodeInList;&#10;if(*pLastNodeInList != NULL)&#10;(*pLastNodeInList)-&#62;m_pRight = pCurrent;&#10;&#10;*pLastNodeInList = pCurrent;&#10;&#10;if(pCurrent-&#62;m_pRight != NULL)&#10;ConvertNode(pCurrent-&#62;m_pRight, pLastNodeInList);&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Q28_uFF1A_u5B57_u7B26_u4E32_u7684_u6392_u5217"><a href="#Q28_uFF1A_u5B57_u7B26_u4E32_u7684_u6392_u5217" class="headerlink" title="Q28：字符串的排列"></a>Q28：字符串的排列</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#20010;&#23383;&#31526;&#20018;&#65292;&#25171;&#21360;&#20986;&#35813;&#23383;&#31526;&#20018;&#20013;&#23383;&#31526;&#30340;&#25152;&#26377;&#25490;&#21015;</span><br></pre></td></tr></table></figure>
-<p>参考代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void Permutation(char* pStr)&#10;&#123;&#10;if(pStr == NULL)&#10;return;&#10;Permutation(pStr,pStr);&#10;&#125;&#10;&#10;void Permutation(char* pStr, char* pBegin)&#10;&#123;&#10;if(*pBegin == &#39;\0&#39;)&#10;printf(&#34;%s\n&#34;,pStr);&#10;else&#10;&#123;&#10;for(char* pCh = pBegin; *pCh != &#39;\0&#39;; ++ pCh)&#10;&#123;&#10;char temp = *pCh;&#10;*pCh = *pBegin;&#10;*pBegin = temp;&#10;Permutation(pStr,pBegin + 1);&#10;temp = *pCh;&#10;*pCh = *pBegin;&#10;*pBegin = temp;&#10;&#125;&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>举一反三：求字符的所有组合（比如输入三个字符a、b、c，则他们的组合有a、b、c、ab、ac、bc、abc）</p>
-<p>提示：在求n个字符的长度为m的组合的时候，分别求n-1个字符串中长度为m-1的组合，以及求n-1个字符的长度为m的组合。</p>
-<h3 id="Q30_uFF1A_u6700_u5C0F_u7684k_u4E2A_u6570"><a href="#Q30_uFF1A_u6700_u5C0F_u7684k_u4E2A_u6570" class="headerlink" title="Q30：最小的k个数"></a>Q30：最小的k个数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;n&#20010;&#25972;&#25968;&#65292;&#25214;&#20986;&#20854;&#20013;&#30340;&#26368;&#23567;&#30340;k&#20010;&#25968;&#12290;</span><br></pre></td></tr></table></figure>
-<p>解法一：基于Partition函数的方法，O(n)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#23454;&#29616;&#24555;&#36895;&#25490;&#24207;&#30340;&#20851;&#38190;&#65306;&#20808;&#22312;&#25968;&#32452;&#20013;&#36873;&#25321;&#19968;&#20010;&#25968;&#23383;&#65292;&#25509;&#19979;&#26469;&#25226;&#25968;&#32452;&#20013;&#30340;&#25968;&#23383;&#20998;&#20026;&#20004;&#37096;&#20998;&#65292;&#27604;&#36873;&#25321;&#30340;&#25968;&#23383;&#23567;&#30340;&#25968;&#23383;&#31227;&#21040;&#25968;&#32452;&#30340;&#24038;&#36793;&#65292;&#27604;&#36873;&#25321;&#30340;&#25968;&#23383;&#22823;&#30340;&#25968;&#23383;&#31227;&#21040;&#25968;&#32452;&#30340;&#21491;&#36793;&#12290;&#10;int Partition(int data[], int length, int start, int end)&#10;&#123;&#10;if(data == NULL || length &#60;= 0 || start &#60;0 || end &#62;= length)&#10;throw new std::exception(&#34;Invalid Parameters&#34;);&#10;int index = RandomInRange(start, end);&#10;Swap(&#38;data[index],&#38;data[end]);&#10;&#10;int small = start - 1;&#10;for(index = start; index &#60; end; ++ index)&#10;&#123;&#10;if(data[index]&#60;data[end])&#10;&#123;&#10;++ small;&#10;if(small != index)&#10;Swap(&#38;data[index],&#38;data[small]);&#10;&#125;&#10;&#125;_&#10;++small;&#10;Swape(&#38;data[small],&#38;data[end]);&#10;return small;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>解法二：维护一个最大堆（放k个数的容器，在O(1)时间找到最大值，O(logn)时间删除最大数，插入新的数字），复杂度O(nlogn)<br>两个优点：</p>
-<ol>
-<li>没有修改输入的数据</li>
-<li>只要求内存能容纳k个数，不必把n个数据一次载入内存，适合海量数据的输入</li>
-</ol>
-<h3 id="Q36_uFF1A_u6570_u7EC4_u4E2D_u7684_u9006_u5E8F_u5BF9"><a href="#Q36_uFF1A_u6570_u7EC4_u4E2D_u7684_u9006_u5E8F_u5BF9" class="headerlink" title="Q36：数组中的逆序对"></a>Q36：数组中的逆序对</h3><p>在数组中的两个数字如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。<br>提示：类似于归并排序</p>
-<h3 id="Q37_uFF1A_u4E24_u4E2A_u94FE_u8868_u7684_u7B2C_u4E00_u4E2A_u516C_u5171_u7ED3_u70B9"><a href="#Q37_uFF1A_u4E24_u4E2A_u94FE_u8868_u7684_u7B2C_u4E00_u4E2A_u516C_u5171_u7ED3_u70B9" class="headerlink" title="Q37：两个链表的第一个公共结点"></a>Q37：两个链表的第一个公共结点</h3><p>输入两个链表，找出他们的第一个公共结点<br>暴力：O(mn)<br>构造两个辅助栈，从后往前找：O(m+n)<br>优化：先遍历一次找出长度的差值，第二次遍历时，较长的链表先走那么多步，再同时遍历，O(m+n)</p>
-<h3 id="Q39_uFF1A_u4E8C_u53C9_u6811_u7684_u6DF1_u5EA6"><a href="#Q39_uFF1A_u4E8C_u53C9_u6811_u7684_u6DF1_u5EA6" class="headerlink" title="Q39：二叉树的深度"></a>Q39：二叉树的深度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#26869;&#20108;&#21449;&#26641;&#30340;&#26681;&#32467;&#28857;&#65292;&#27714;&#35813;&#26641;&#30340;&#28145;&#24230;&#12290;</span><br></pre></td></tr></table></figure>
-<p>引申：输入一棵二叉树的根结点，判断该树是不是平衡二叉树。</p>
-<p>方法一：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool IsBalanced(BinaryTreeNode* pRoot)&#10;&#123;&#10;if(pRoot == NULL)&#10;return true;&#10;int left = TreeDepth(pRoot-&#62;m_pLeft);&#10;int right = TreeDepth(pRoot-&#62;m_pRight);&#10;int diff = left -right;&#10;if(diff &#62; 1 || diff &#60; -1)&#10;return false;&#10;return IsBalanced(pRoot-&#62;m_pLeft) &#38;&#38; IsBalanced(pRoot-&#62;m_pRight);&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>每个节点都会被重复遍历多次，效率不高</p>
-<p>方法二：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool IsBalanced(BinaryTreeNOde* pRoot, int* pDepth)&#10;&#123;&#10;if(pRoot == NULL)&#10;&#123;&#10;*pDepth = 0;&#10;return true;&#10;&#125;&#10;int left,right;&#10;if(IsBalanced(pRoot-&#62;m_pLeft,&#38;left)&#38;&#38;IsBalanced(pRoot-&#62;m_pRight,&#38;right))&#10;&#123;&#10;int diff = left - right;&#10;if(diff &#60;= 1 &#38;&#38; diff &#62;= -1)&#10;&#123;&#10;*pDepht = 1 + (left &#62; right ? left : right);&#10;return true;_&#10;&#125;&#10;&#125;&#10;return false;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们只需给上面的函数传入二叉树的根结点及一个表示结点深度的整型变量即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool IsBalanced(BinaryTreeNode* pRoot)&#10;&#123;&#10;int depth = 0;&#10;return IsBalanced(pRoot, &#38;depth);&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Q40_uFF1A_u6570_u7EC4_u4E2D_u53EA_u51FA_u73B0_u4E00_u6B21_u7684_u6570_u5B57"><a href="#Q40_uFF1A_u6570_u7EC4_u4E2D_u53EA_u51FA_u73B0_u4E00_u6B21_u7684_u6570_u5B57" class="headerlink" title="Q40：数组中只出现一次的数字"></a>Q40：数组中只出现一次的数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#19968;&#20010;&#25972;&#22411;&#25968;&#32452;&#37324;&#38500;&#20102;&#20004;&#20010;&#25968;&#23383;&#20043;&#22806;&#65292;&#20854;&#20182;&#30340;&#25968;&#23383;&#37117;&#20986;&#29616;&#20004;&#27425;&#12290;&#25214;&#20986;&#36825;&#36830;&#20010;&#21482;&#20986;&#29616;&#19968;&#27425;&#30340;&#25968;&#23383;&#12290;&#35201;&#27714;&#26102;&#38388;&#22797;&#26434;&#24230;&#26159;O(n)&#65292;&#31354;&#38388;&#22797;&#26434;&#24230;&#26159;O(1)&#12290;</span><br></pre></td></tr></table></figure>
-<p>提示：异或的性质<br>全部取异或之后按第一个1的位置是不是1将原数组中的数字分为两个子数组，在分别异或。</p>
-<h3 id="Q41_uFF1A_u548C_u4E3As_u7684_u4E24_u4E2A_u6570_u5B57-_26gt_3B_u548C_u4E3As_u7684_u8FDE_u7EED_u6B63_u6574_u6570_u5E8F_u5217"><a href="#Q41_uFF1A_u548C_u4E3As_u7684_u4E24_u4E2A_u6570_u5B57-_26gt_3B_u548C_u4E3As_u7684_u8FDE_u7EED_u6B63_u6574_u6570_u5E8F_u5217" class="headerlink" title="Q41：和为s的两个数字-&gt;和为s的连续正整数序列"></a>Q41：和为s的两个数字-&gt;和为s的连续正整数序列</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#20010;&#22320;&#38663;&#25490;&#24207;&#30340;&#25968;&#32452;&#21644;&#19968;&#20010;&#25968;&#23383;s&#65292;&#22312;&#25968;&#32452;&#20013;&#26597;&#25214;&#20004;&#20010;&#25968;&#65292;&#20351;&#24471;&#20182;&#20204;&#30340;&#21644;&#27491;&#22909;&#26159;s&#12290;&#22914;&#26524;&#26377;&#22810;&#23545;&#25968;&#23383;&#30340;&#21644;&#26159;s&#65292;&#36755;&#20986;&#20219;&#24847;&#19968;&#23545;&#21363;&#21487;&#12290;</span><br></pre></td></tr></table></figure>
-<p>规律：O(n)复杂度，一般都要想出两个指针来做<br>变式：输入一个整数s，打印出所有和为s的连续正整数序列（至少有两个数）</p>
-<h3 id="Q42_uFF1A_u7FFB_u8F6C_u5355_u8BCD_u987A_u5E8F-_26gt_3B_u5DE6_u65CB_u8F6C_u5B57_u7B26_u4E32"><a href="#Q42_uFF1A_u7FFB_u8F6C_u5355_u8BCD_u987A_u5E8F-_26gt_3B_u5DE6_u65CB_u8F6C_u5B57_u7B26_u4E32" class="headerlink" title="Q42：翻转单词顺序-&gt;左旋转字符串"></a>Q42：翻转单词顺序-&gt;左旋转字符串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36755;&#20837;&#19968;&#20010;&#33521;&#25991;&#21477;&#23376;&#65292;&#32763;&#36716;&#21333;&#35789;&#30340;&#39034;&#24207;&#65292;&#20294;&#21333;&#35789;&#20869;&#23383;&#31526;&#30340;&#39034;&#24207;&#19981;&#21464;&#12290;</span><br></pre></td></tr></table></figure>
-<p>变式：定义一个函数实现字符串左旋转的功劳，比如输入字符串”abcdefg”和数字2，该函数将返回左旋转2位得到的结果”cdefgab”。</p>
-<h3 id="Q43_uFF1An_u4E2A_u9AB0_u5B50_u7684_u70B9_u6570"><a href="#Q43_uFF1An_u4E2A_u9AB0_u5B50_u7684_u70B9_u6570" class="headerlink" title="Q43：n个骰子的点数"></a>Q43：n个骰子的点数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#25226;n&#20010;&#39600;&#23376;&#25172;&#22312;&#22320;&#19978;&#65292;&#25152;&#26377;&#39600;&#23376;&#26397;&#19978;&#19968;&#38754;&#30340;&#28857;&#25968;&#20043;&#21644;&#20026;s&#65292;&#36755;&#20837;n&#65292;&#25171;&#21360;s&#30340;&#25152;&#26377;&#21487;&#33021;&#30340;&#20540;&#20986;&#29616;&#30340;&#27010;&#29575;&#12290;</span><br></pre></td></tr></table></figure>
-<h3 id="Q49_uFF1A_u628A_u5B57_u7B26_u4E32_u8F6C_u6362_u6210_u6574_u6570"><a href="#Q49_uFF1A_u628A_u5B57_u7B26_u4E32_u8F6C_u6362_u6210_u6574_u6570" class="headerlink" title="Q49：把字符串转换成整数"></a>Q49：把字符串转换成整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enum StatusP&#123;kValid = 0, kInvalid&#125;;&#10;int g_nStatus = kValid;&#10;int StrToInt(const char* str)&#10;&#123;&#10;g_nStatus = kInvalid;&#10;long long num = 0;&#10;if(str != NULL &#38;&#38; *str != &#39;\0&#39;)&#10;&#123;&#10;bool minus = false;&#10;if(*str == &#39;+&#39;)&#10;str++;&#10;else if(*str == &#39;-&#39;)&#10;&#123;&#10;str ++;&#10;minus = true;&#10;&#125;&#10;if(*str != &#39;\0&#39;)&#10;&#123;&#10;num = StrToIntCore(str,minus);&#10;&#125;&#10;&#125;&#10;return (int)num;&#10;&#125;&#10;&#10;long long StrToIntCore(const char* digit, bool minus)&#10;&#123;&#10;long long num = 0;&#10;while(*digit != &#39;\0&#39;)&#10;&#123;&#10;if(*digit &#62;= &#39;0&#39; &#38;&#38; *digit &#60;= &#39;9&#39;)&#10;&#123;&#10;int flag = minus?-1:1;&#10;num = num * 10 + flag * (*digit - &#39;0&#39;);&#10;if((!minus &#38;&#38; num &#62; 0x7FFFFFFF)&#10;|| (minus &#38;&#38; num &#60; (signed int)0x80000000))&#10;&#123;&#10;num = 0;&#10;break;&#10;&#125;&#10;digit++;&#10;&#125;&#10;else&#10;&#123;&#10;num ++;&#10;break;&#10;&#125;&#10;if(*digit == &#39;\0&#39;)&#10;&#123;&#10;g_nStatus = kValid;&#10;&#125;&#10;return num;&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Q50_uFF1A_u6811_u4E2D_u4E24_u4E2A_u7ED3_u70B9_u7684_u6700_u4F4E_u516C_u5171_u7956_u5148"><a href="#Q50_uFF1A_u6811_u4E2D_u4E24_u4E2A_u7ED3_u70B9_u7684_u6700_u4F4E_u516C_u5171_u7956_u5148" class="headerlink" title="Q50：树中两个结点的最低公共祖先"></a>Q50：树中两个结点的最低公共祖先</h3><p>情况一：二叉搜索树<br>情况二：普通的树有指向父亲结点的指针（转换成类似Q37的题目）<br>情况三：普通的树没有指向父亲结点的指针（可以考虑辅助内存，遍历两次树，时间复杂度O(n)，空间复杂度O(logn)）</p>
-<h3 id="C++_u8BED_u6CD5_u8865_u5145"><a href="#C++_u8BED_u6CD5_u8865_u5145" class="headerlink" title="C++语法补充"></a>C++语法补充</h3><ol>
-<li><p>含有指针成员的类一般要自己写拷贝构造函数或者拷贝运算符的重载函数，否则在编译器生成的缺省的构造拷贝函数和拷贝运算符的重载函数，对指针实行的是按位拷贝，仅仅是拷贝指针的地址，而不会拷贝指针的内容。另一种解决办法是禁用这两个函数，如果类的用户企图调用这两个函数，将不能通过编译。实现的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private:&#10;Array(const Array&#38; copy);&#10;const Array&#38; operator=(const Array&#38; copy);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>const和static不能同时修饰类的成员函数。C++编译器在实现const的成员函数的时候为了确保该函数不能修改类的实例的状态，会在函数中添加一个隐式的const this*。但当一个成员为static的时候，该函数是没有this指针的。</p>
-</li>
-<li>C++中，成员变量的初始化顺序只与它们在类中声明的顺序有关，而与在初始化列表中的顺序无关。</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/10/Classification-Retrieval/" itemprop="url">
-                  Classification_Retrieval
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/28/resnet-mxnet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/28/resnet-mxnet/" itemprop="commentsCount"></span>
                 </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-02-10T11:08:07+08:00" content="2016-02-10">
-              2016-02-10
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4"><a href="#classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4" class="headerlink" title="classification与retrieval问题对比"></a>classification与retrieval问题对比</h3><img src="/2016/02/10/Classification-Retrieval/1.png" alt="1.png" title="">
-<ol>
-<li>如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier</li>
-<li>classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同</li>
-<li>数据集来自indoor-67，每个图片已经赋予了一定的描述向量</li>
-</ol>
-<h3 id="u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898"><a href="#u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898" class="headerlink" title="用classification的方法解决retrieval问题"></a>用classification的方法解决retrieval问题</h3><img src="/2016/02/10/Classification-Retrieval/2.png" alt="2.png" title="">
-<img src="/2016/02/10/Classification-Retrieval/3.png" alt="3.png" title="">
-<ol>
-<li>把每个图定义为一个类别，每个图的子patch作为该类的“图片”，提取该“图片”的特征放到特征空间如图，用image-class距离作为query图与数据库中图片的距离</li>
-<li>这种距离的计算方法类似于KNN</li>
-</ol>
-<h3 id="u590D_u6742_u5EA6_u5206_u6790"><a href="#u590D_u6742_u5EA6_u5206_u6790" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><img src="/2016/02/10/Classification-Retrieval/4.png" alt="4.png" title="">
-<img src="/2016/02/10/Classification-Retrieval/5.png" alt="5.png" title="">
-<ol>
-<li>计算图间距离比普通的方法大了K^2倍，改用PCA和PQ降低复杂度</li>
-<li>算法复杂度仍是瓶颈</li>
-<li>PQ的算法见paper：<a href="https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf" target="_blank" rel="external">https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf</a></li>
-<li>常见近邻算法：<a href="http://blog.csdn.net/guoyilin/article/details/39668183" target="_blank" rel="external">http://blog.csdn.net/guoyilin/article/details/39668183</a></li>
-</ol>
-<p>注:内容主要参考清华大学Lingxi Xie博士的报告及其论文(<a href="http://vision.ouc.edu.cn/valse/videos/VALSE20150722-PaperReading-LiuGuangcan_XieLingxi-NUIST_TSINGHUA-publish.mp4" target="_blank" rel="external">http://vision.ouc.edu.cn/valse/videos/VALSE20150722-PaperReading-LiuGuangcan_XieLingxi-NUIST_TSINGHUA-publish.mp4</a> 、 <a href="http://bigml.cs.tsinghua.edu.cn/~lingxi/PDFs/Xie_ICMR15_ONE.pdf" target="_blank" rel="external">http://bigml.cs.tsinghua.edu.cn/~lingxi/PDFs/Xie_ICMR15_ONE.pdf</a>)</p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/08/CFSS/" itemprop="url">
-                  CFSS
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-02-08T11:52:12+08:00" content="2016-02-08">
-              2016-02-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="3000-fps-cvpr14_u7684_u65B9_u6CD5_3A"><a href="#3000-fps-cvpr14_u7684_u65B9_u6CD5_3A" class="headerlink" title="3000-fps-cvpr14的方法:"></a>3000-fps-cvpr14的方法:</h2><p><a href="http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/en-us/people/yichenw/cvpr14_facealignment.pdf</a><br>整个流程基于Cascade Pose Regression(<a href="http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf" target="_blank" rel="external">http://vision.ucsd.edu/~pdollar/files/papers/DollarCVPR10pose.pdf</a>)，训练步骤如下：(参考xbb学长的博客<a href="http://freesouls.github.io/2015/06/07/face-alignment-local-binary-feature/" target="_blank" rel="external">http://freesouls.github.io/2015/06/07/face-alignment-local-binary-feature/</a>)</p>
-<h3 id="u7279_u5F81_u63D0_u53D6"><a href="#u7279_u5F81_u63D0_u53D6" class="headerlink" title="特征提取"></a>特征提取</h3><ol>
-<li>先random产生500个pixel difference features</li>
-<li>选取最具有分辨力的pixel difference features作为Random Forest中每棵树中的非叶子结点</li>
-<li>输入图片得到Local Binary Features<br>一句话就是通过PDF+RF得到了一个稀疏的特征<br>特征提取方法来自于一篇cvpr12：<a href="http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf" target="_blank" rel="external">http://research.microsoft.com/pubs/192097/cvpr12_facealignment.pdf</a><h3 id="u56DE_u5F52"><a href="#u56DE_u5F52" class="headerlink" title="回归"></a>回归</h3><img src="/2016/02/08/CFSS/1454664119237.png" alt="1454664119237.png" title="">
-没有发现很特殊的地方？</li>
-</ol>
-<h2 id="CFSS_u7684_u65B9_u6CD5_uFF1A"><a href="#CFSS_u7684_u65B9_u6CD5_uFF1A" class="headerlink" title="CFSS的方法："></a>CFSS的方法：</h2><img src="/2016/02/08/CFSS/1454660991747.png" alt="1454660991747.png" title="">
-<p>注意：</p>
-<ol>
-<li>L=stageTot=3 每个stage之间用的Pr不同</li>
-<li>stage内部也有3次迭代，训练的是三个不同的回归模型，10张脸经过3次不同的回归得到10张新脸，然后poseVoting函数算出平均脸（这个函数里面有个100次迭代的算法，详见论文及其引用）</li>
-<li>Pr的计算在算出新一波的sub-region center 之后进行，原理主要是那几个公式，概率估计，用的是那10个脸的坐标变化值的数据？我们做的时候可以用距离1500-1510和100-110这两个代替（第一个stage用的是随机的10张脸）</li>
-<li>第5行Kl=132，第二点说到的一个回归模型是由132个regressor组成的，每一个regressor的回归自变量是一幅图所有landmark点的特征的连接，因变量是某一个landmark的坐标改变量，总共有31480（10*N）个point用于回归，方法是岭回归（线性回归的一种）</li>
-<li>3000-fps那篇论文的方法更加general&amp;simple（相比于这篇）的方法，stage内部没有多次迭代，直接一幅图的landmark feature连接回归到一个landmark的坐标该变量作为一个regressor，总共有N个这样的point用于回归，每个stage回归出一个模型，并不需要求平均脸，直接取最后一次回归结果加上上一次的人脸？</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/25/Year-Summary/" itemprop="url">
-                  Year Summary
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-01-25T15:55:48+08:00" content="2016-01-25">
-              2016-01-25
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>This year, many thing to be done. Half fufilled and half remained, while some lightpoints but no big<br>surprise. </p>
-<p>总之想写点年度总结，应该说些什么呢，按时间顺序来吧，也好打发这动车上操蛋无聊的时间。</p>
-<p><strong>Jan</strong>：我应该是参加了美赛，哦 为美赛准备，过完还算轻松的考试周，为了美赛做了一些现在看起来其实帮助并不算特别大的准备。</p>
-<p><strong>Feb</strong>：美赛大概四天吧，记得那个时候很纯洁和天真以及于特别蠢，以至于做了一些傻事吧。哈哈，过年是最快乐的，现在依稀记得的场景，是在外婆家大年三十的晚上，看着漫天烟火，和很多人互发祝贺的消息，很晚，很宁静，想法已经依稀不记得了，我还是不要胡思乱想了，再写后面真的就是纯yy了。</p>
-<p><strong>Mar</strong>：回校，一回就是快一年，如果不是上次意外，就没有回过家。说来我这个蠢蛋还是有点傻福的。这段时间，应该是大二下吧，哈哈，写过几个大程吗，貌似是有的，数据库开启了世界上最好的语言的第一页。</p>
-<p><strong>大二下</strong>：这学期，有的回忆，大多都淡忘了，有些事让人很伤心的，也真的淡忘的，以至于现在对这段时间没有什么特别的记忆，这和这之后的现在的我以及这之前的我的意愿其实是违背的。嗯，一定要活的更精彩一些。</p>
-<p><strong>July</strong>：好多事啊，去了深港，去了某国内知名公司的实习（大水）之路，果然闷了一学期终于有些小爆发，好吧，还是那句老话，如果你的能力无法支撑你的理想，就应该好好读书，后来的很多事不管是正例反例都印证了这一点。</p>
-<p><strong>八月</strong>：第一次整个暑假都留在外面，还是有点小激动的，现在想想，爸妈来的那几天，还是有些没服务周到的，惭愧了。另外我的视野应该更广一些才对，有时候因为环境潜移默化地影响了自己的思考，说明事实上思考本身就是不深入不坚定的，这一点上，我还得学习三分，向先进的同志学习。</p>
-<p><strong>Sep</strong>：开学对我来说不算是太好的信息，因为这个月有一个很大的挑战：T。结果是：惨败。所以呢，现在打算二战，只可胜不可败。另外这段时间开始，真正的大三，一些想法变得很多，一方面和我之前说的一样，人生观显得很脆弱，要改，另一方面也姑且算是一种成熟吧。事实上，我觉得这是老了，或者，刚成年。</p>
-<p><strong>Oct</strong>：这个月总体关键词就是忙，恩，非常忙的那种忙，但这是我真正想要的，事实上我非常享受这种感觉，非常非常，那种对知识的渴望，无异于我能想到的最长久最深刻的快感。可是以前为什么没有这样的感觉了，我简单反思了一下，太懒，胆子小，是根本，我真的很没决断力，我是说有一段时间，当然不包括现在。现在好多了。嗯。</p>
-<p><strong>Nov</strong>：哈哈，这段和上一段相同。来来来，我们总结一下这学期忙了什么，以及还有什么需要继续忙下去的（卧槽 一不小心打成浪下去的 为什么感觉很应景？）。恩，几门课学的不少，专题研讨的cnn部分，数字视音频的视频部分，图像处理和视觉的每次作业，以及计算理论都能给予我精神层次的安慰，这真是极好极好的，另外，感谢开学初看专题研讨课件那段时间对诸如GIST feature，傅里叶分析，谱聚类，SVM，特征值与特征向量等的探讨，感谢程学长，黄学长，以后要坚持这种品行，求知，求是。</p>
-<p><strong>Dec</strong>：这段就留给这段时间认识的可爱的朋友们吧，他们分别是：yd，mm，zyy&amp;学姐。我们五个人真是有点把浪发挥到了极致，有时候我觉得这样挺好的，有时候又挺违心的（不过有这种想法的时候，过不了多久就没这么想过了）。恩，总之很开心。如果一定要写点什么总结，就拿我在98上的留言套在这里吧：这个学期过的和以往的每个学期又不一样，开心，新年再见。</p>
-<p><strong>Jan 2016</strong>：这个月还没过完了，万一在最后这几天发生了什么大事，这里一定要记下来的，所以先把这个月之前的先记下来吧，嗯，是要记点什么的，不然怎么表达这个月我的充实生活呢，所以回忆的字数是衡量生活是否有意义的最高标准。好的，差不多了，我先就此戈比了。</p>
-<p>从杭州东到成都东的动车上<br>2016年1月25日</p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/24/mypost/" itemprop="url">
-                  mypost
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-01-24T12:36:01+08:00" content="2016-01-24">
-              2016-01-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">分類於</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/blog/" itemprop="url" rel="index">
-                    <span itemprop="name">blog</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
             
           
 
@@ -736,195 +270,7 @@
       
         
           
-            <p>##################### </p>
-<h4 id="Linux_u547D_u4EE4"><a href="#Linux_u547D_u4EE4" class="headerlink" title="Linux命令"></a><strong>Linux命令</strong></h4><p>mount<br>cp：将一个档案copy到另一档案，或将数个档案copy至另一目录<br>通过VFS提供的系统调用接口进行文件操作<br>pwd：<br>cat<br>grep<br>find<br>ls<br>man: 帮助手册的章节，1-用户命令，2-系统调用，5-文件格式，8-关于系统维护的命令</p>
-<h4 id="Linux_u7F16_u8BD1_u57FA_u672C_u547D_u4EE4"><a href="#Linux_u7F16_u8BD1_u57FA_u672C_u547D_u4EE4" class="headerlink" title="Linux编译基本命令"></a>Linux编译基本命令</h4><p>make<br>config</p>
-<h4 id="u57FA_u672C_u6982_u5FF5"><a href="#u57FA_u672C_u6982_u5FF5" class="headerlink" title="基本概念"></a>基本概念</h4><p><strong>/proc</strong>：虚拟文件系统，在这里可以获取系统状态信息并且修改系统的某些配置信息<br>如内存情况在/proc/meminfo文件中<br>vfs：存在于内存空间，根据不同的文件系统抽象出了一个通用的文件模型，由四种数据对象组成：</p>
-<ul>
-<li>超级块对象superblock：存储已安装文件系统的信息，通常对应磁盘文件系统的文件系统超级块或者控制块</li>
-<li>索引节点对象inode object：存储某个文件的信息。通常对应磁盘文件系统的文件控制块。</li>
-<li>目录项对象dentry object：dentry对象主要是描述一个目录项，是路径的组成部分。</li>
-<li>文件对象file object：存储一个打开文件和一个进程的关联信息。只要文件一直打开，这个对象就一直存在。<br>task_struct：进程控制块PCB，是进程存在的唯一标志。</li>
-</ul>
-<ul>
-<li>struct mm_struct *mm //进程的虚存信息</li>
-<li>struct fs_struct *fs //进程的可执行映象所在的文件系统</li>
-<li>struct files_struct *files //进程打开的文件</li>
-</ul>
-<h4 id="u5185_u6838_u7F16_u8BD1"><a href="#u5185_u6838_u7F16_u8BD1" class="headerlink" title="内核编译"></a><strong>内核编译</strong></h4><p>添加系统调用mysyscall：每发生一次缺页都要进入缺页中断服务函数do_page_fault一次，所以可以认为该函数的次数就是发生缺页的次数</p>
-<p>####<strong>缺页中断调用机理</strong><br>缺页中断矢量设置（3分）<br>区分是页面异常（地址非法，访问权限等）还是缺页（3分）<br>Linux的页面管理，虚拟地址段管理，换页等（4分）</p>
-<p>####<strong>进程状态转换</strong><br>进程是由正文段、用户数据段和系统数据段、堆栈段组成的一个动态实体<br><img src="http://img.blog.csdn.net/20160122181837627" alt="这里写图片描述"></p>
-<h4 id="fork_uFF08_uFF09_u51FD_u6570_u8FDB_u7A0B_u521B_u5EFA_u8FC7_u7A0B"><a href="#fork_uFF08_uFF09_u51FD_u6570_u8FDB_u7A0B_u521B_u5EFA_u8FC7_u7A0B" class="headerlink" title="fork（）函数进程创建过程"></a><strong>fork（）函数进程创建过程</strong></h4><ul>
-<li>为新进程分配task_struct内存空间</li>
-<li>把父进程task_struct拷贝到子进程的task_struct</li>
-<li>为新进程在其虚拟内存建立内核堆栈</li>
-<li>对子进程task_struct中部分进行初始化设置</li>
-<li>把父进程的有关信息拷贝给子进程，建立共享关系</li>
-<li>把子进程的counter设为父进程counter值的一半</li>
-<li>把子进程加入到可运行队列中</li>
-<li>结束do_fork（）函数返回PID值</li>
-</ul>
-<h4 id="do_fork_uFF08_uFF09_u51FD_u6570"><a href="#do_fork_uFF08_uFF09_u51FD_u6570" class="headerlink" title="do_fork（）函数"></a><strong>do_fork（）函数</strong></h4><p>三个系统调用实现创建子进程都会调用do_fork（）函数</p>
-<ul>
-<li>sys_clone（）：对应的clone_flags可能是多个标志位的组合，取决于具体情况</li>
-<li>sys_vfork（）：对应的clone_flags值是SIGCHIILD。SIGCHILD的作用是子进程终结或暂停时给父进程发信号。</li>
-<li>sys_fork（）：对应的clone_flags值是CLONE_VFORK|CLONE_VM|SIGCHILD</li>
-</ul>
-<p>do_fork（）的执行过程</p>
-<ul>
-<li>调用alloc_task_struct（）分配子进程task_struct空间。</li>
-<li>把父进程task_struct的值全部赋给子进程task_struct。</li>
-<li>检查是否超过了资源限制，如果是，则结束并返回出错信息。更改一些统计量的信息。</li>
-<li>修改子进程task_struct的某些成员的值使其正确反映子进程的状况，如进程状态被置成TASK_UNINTERRUPTIBLE。</li>
-<li>调用get_pid（）函数为子进程得到一个pid号。</li>
-<li>共享或复制父进程文件处理、信号处理及进程虚拟地址空间等资源。</li>
-<li>调用copy_process（）初始化子进程的内核栈，内核栈保存了进程返回用户空间的上文。（以i386为例，其中很重要的一点是寄存器eax值的位置被置0，这个值就是执行系统调用后子进程的返回值。）</li>
-<li>将父进程的当前的时间配额counter分一半给子进程。</li>
-<li>利用宏SET_LINKS将子进程插入所有进程都在其中的双向链表。调用hash_pid（），将子进程加入相应的hash队列。</li>
-<li>调用wake_up_process（），将该子进程插入可运行队列。至此，子进程创建完毕，并在可运行队列中等待被调度执行。</li>
-<li>如果clone_flags包含有CLONE_VFORK标志，则将父进程挂起直到子进程释放进程空间。（进程控制块中有 一个信号量vfork_sem可以起到将进程挂起的作用。）</li>
-<li>返回子进程的pid值，该值就是系统调用后父进程的返回值。</li>
-</ul>
-<p><img src="http://img.blog.csdn.net/20160122184943498" alt="这里写图片描述"></p>
-<h4 id="u6587_u4EF6_u7CFB_u7EDFmount_u547D_u4EE4"><a href="#u6587_u4EF6_u7CFB_u7EDFmount_u547D_u4EE4" class="headerlink" title="文件系统mount命令"></a><strong>文件系统mount命令</strong></h4><p>语法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount [-t fstype] [-o options] device dirname</span><br></pre></td></tr></table></figure>
-<p>内核与之对应的系统调用是sys_mount()。该函数根据文件 系统类型得到相应的file_system_type 对象,再取得该分区 的超级块对象。</p>
-<p>####<strong>系统中断</strong><br>导致缺页异常（缺页中断）的原因有：</p>
-<ul>
-<li>编程错误。可分为内核程序错误和用户程序错误</li>
-<li>操作系统故意引发的异常。操作系统利用硬件机制，在适当时间触发异常，使得该异常的处理程序被调用，以达到预期目的。</li>
-</ul>
-<p>补充：</p>
-<ul>
-<li>do_page_fault（）得到的异常发生虚拟地址对于IA32在CR2寄存器中；此函数执行次数可认为系统发生缺页</li>
-<li>每个进程都有一个页目录，当进程运行时，寄存器CR3指向该页目录的地址。</li>
-<li>系统三级页表：</li>
-</ul>
-<ul>
-<li>页目录PGD</li>
-<li>页中间目录PMD</li>
-<li>页表PTE</li>
-</ul>
-<ul>
-<li>2.6.11以后Linux采用四级页表模型来使用硬件分页机制，分别是：pgd_t，pud_t，pmd_t，pte_t</li>
-<li>Linux使用两个运行模式：特权级0和特权级3，即内核模式和用户模式</li>
-<li>每个系统调用号至少有一个参数，即通过eax寄存器传递来的系统调用号</li>
-<li>Linux利用守护进程kswapd定期检查系统内的空闲页帧数是否小于预定义的极限，一旦发现空闲帧数太少，就先将若干页换出。kswapd相当于一个进程，它有自己的进程控制块task_struct结构，与其他进程一样同样受内核调度，但没有独立的地址空间</li>
-<li>写时拷贝的处理过程</li>
-</ul>
-<ul>
-<li>首先改写对应页表项的访问标志位,表明其刚被访问过,<br>这样在页面调度时该页面就不会被优先考虑。</li>
-<li>如果该页帧目前只为一个进程单独使用,则只需把页表项置为可写。</li>
-<li>如果该页帧为多个进程共享,则申请一个新的物理页帧并 标记为可写,复制原来物理页帧的内容,更改当前进程相应的页表项,同时原来的物理页帧的共享计数减一。</li>
-</ul>
-<ul>
-<li>按需调页的处理过程</li>
-</ul>
-<ul>
-<li>第一种情况页面从未被进程访问，这种情况页表项的值全部为0</li>
-<li>另一种情况是该页面被进程访问过,但是目前已被写到交换 分区, 页表项的存在标志位为0,但其他位被用来记录该页 面在交换分区中的信息。</li>
-</ul>
-<ul>
-<li>伙伴系统的操作：</li>
-</ul>
-<ul>
-<li>申请空间的函数为alloc_pages( );</li>
-<li>释放函数为free_pages( );</li>
-<li>当在申请内存发现页帧短缺时,还会唤醒kswapd内核线程运行,该线程会腾出一些空间以满足要求。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/24/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-01-24T10:36:30+08:00" content="2016-01-24">
-              2016-01-24
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
           
         
       
@@ -986,7 +332,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1106,9 +452,28 @@
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zjuvblog"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
   
+    
+  
+
+
 
 
 
