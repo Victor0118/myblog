@@ -57,33 +57,23 @@
 
 
 
-<meta name="description" content="classification与retrieval问题对比
-
-如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier
-classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同
-数据集来自indo">
+<meta name="description" content="###Note for DeepID2
+这几天开始读Deep Learning Face Representation by Joint Identification-Verification：http://arxiv.org/abs/1406.4773算法流程：
+Face identification是识别人是谁，相当于classification，verification是判断两个人是不是同一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Classification_Retrieval">
-<meta property="og:url" content="http://yoursite.com/2016/02/10/Classification-Retrieval/index.html">
+<meta property="og:title" content="caffe&mxnet基础笔记">
+<meta property="og:url" content="http://yoursite.com/2016/03/03/caffe-mxnet基础笔记/index.html">
 <meta property="og:site_name" content="Victor's Blog">
-<meta property="og:description" content="classification与retrieval问题对比
-
-如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier
-classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同
-数据集来自indo">
-<meta property="og:image" content="http://yoursite.com/2016/02/10/Classification-Retrieval/1.png">
-<meta property="og:image" content="http://yoursite.com/2016/02/10/Classification-Retrieval/2.png">
-<meta property="og:image" content="http://yoursite.com/2016/02/10/Classification-Retrieval/3.png">
-<meta property="og:image" content="http://yoursite.com/2016/02/10/Classification-Retrieval/4.png">
-<meta property="og:image" content="http://yoursite.com/2016/02/10/Classification-Retrieval/5.png">
-<meta property="og:updated_time" content="2016-02-10T04:39:36.000Z">
+<meta property="og:description" content="###Note for DeepID2
+这几天开始读Deep Learning Face Representation by Joint Identification-Verification：http://arxiv.org/abs/1406.4773算法流程：
+Face identification是识别人是谁，相当于classification，verification是判断两个人是不是同一">
+<meta property="og:image" content="http://yoursite.com/2016/03/03/caffe-mxnet基础笔记/1.png">
+<meta property="og:updated_time" content="2016-03-02T16:03:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Classification_Retrieval">
-<meta name="twitter:description" content="classification与retrieval问题对比
-
-如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier
-classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同
-数据集来自indo">
+<meta name="twitter:title" content="caffe&mxnet基础笔记">
+<meta name="twitter:description" content="###Note for DeepID2
+这几天开始读Deep Learning Face Representation by Joint Identification-Verification：http://arxiv.org/abs/1406.4773算法流程：
+Face identification是识别人是谁，相当于classification，verification是判断两个人是不是同一">
 
 
 
@@ -101,7 +91,7 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
   };
 </script>
 
-  <title> Classification_Retrieval | Victor's Blog </title>
+  <title> caffe&mxnet基础笔记 | Victor's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -221,7 +211,7 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
             
             
               
-                Classification_Retrieval
+                caffe&mxnet基础笔记
               
             
           </h1>
@@ -233,8 +223,8 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">發表於</span>
-            <time itemprop="dateCreated" datetime="2016-02-10T11:08:07+08:00" content="2016-02-10">
-              2016-02-10
+            <time itemprop="dateCreated" datetime="2016-03-03T00:03:18+08:00" content="2016-03-03">
+              2016-03-03
             </time>
           </span>
 
@@ -244,8 +234,8 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/10/Classification-Retrieval/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/10/Classification-Retrieval/" itemprop="commentsCount"></span>
+                <a href="/2016/03/03/caffe-mxnet基础笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/caffe-mxnet基础笔记/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -266,27 +256,17 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
       
 
       
-        <h3 id="classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4"><a href="#classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4" class="headerlink" title="classification与retrieval问题对比"></a>classification与retrieval问题对比</h3><img src="/2016/02/10/Classification-Retrieval/1.png" alt="1.png" title="">
+        <p>###Note for DeepID2</p>
+<p>这几天开始读Deep Learning Face Representation by Joint Identification-Verification：<a href="http://arxiv.org/abs/1406.4773" target="_blank" rel="external">http://arxiv.org/abs/1406.4773</a><br>算法流程：<br><img src="/2016/03/03/caffe-mxnet基础笔记/1.png" alt="1.png" title=""></p>
+<p>Face identification是识别人是谁，相当于classification，verification是判断两个人是不是同一个人。</p>
+<p>mxnet里的expoch是指训练次数，每个epoch会训练所有的数据</p>
+<p>Training: caffe train learns models from scratch, resumes learning from saved snapshots, and fine-tunes models to new data and tasks:</p>
 <ol>
-<li>如果直接用NN的方法，会找到1的错误结果；如果用svm（一般分类的方法），可以分出1这个outlier</li>
-<li>classification的训练过程对排除outlier很有用；Retrieval中没有类这个定义，每个图像都是一个单独的个体，一般不进行训练，因为无法得到数据库的标签，这是和classification的本质不同</li>
-<li>数据集来自indoor-67，每个图片已经赋予了一定的描述向量</li>
+<li>All training requires a solver configuration through the -solver solver.prototxt argument.</li>
+<li>Resuming requires the -snapshot model_iter_1000.solverstate argument to load the solver snapshot.</li>
+<li>Fine-tuning requires the -weights model.caffemodel argument for the model initialization.</li>
 </ol>
-<h3 id="u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898"><a href="#u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898" class="headerlink" title="用classification的方法解决retrieval问题"></a>用classification的方法解决retrieval问题</h3><img src="/2016/02/10/Classification-Retrieval/2.png" alt="2.png" title="">
-<img src="/2016/02/10/Classification-Retrieval/3.png" alt="3.png" title="">
-<ol>
-<li>把每个图定义为一个类别，每个图的子patch作为该类的“图片”，提取该“图片”的特征放到特征空间如图，用image-class距离作为query图与数据库中图片的距离</li>
-<li>这种距离的计算方法类似于KNN</li>
-</ol>
-<h3 id="u590D_u6742_u5EA6_u5206_u6790"><a href="#u590D_u6742_u5EA6_u5206_u6790" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><img src="/2016/02/10/Classification-Retrieval/4.png" alt="4.png" title="">
-<img src="/2016/02/10/Classification-Retrieval/5.png" alt="5.png" title="">
-<ol>
-<li>计算图间距离比普通的方法大了K^2倍，改用PCA和PQ降低复杂度</li>
-<li>算法复杂度仍是瓶颈</li>
-<li>PQ的算法见paper：<a href="https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf" target="_blank" rel="external">https://lear.inrialpes.fr/pubs/2011/JDS11/jegou_searching_with_quantization.pdf</a></li>
-<li>常见近邻算法：<a href="http://blog.csdn.net/guoyilin/article/details/39668183" target="_blank" rel="external">http://blog.csdn.net/guoyilin/article/details/39668183</a></li>
-</ol>
-<p>注:内容主要参考清华大学Lingxi Xie博士的报告及其论文(<a href="http://vision.ouc.edu.cn/valse/videos/VALSE20150722-PaperReading-LiuGuangcan_XieLingxi-NUIST_TSINGHUA-publish.mp4" target="_blank" rel="external">http://vision.ouc.edu.cn/valse/videos/VALSE20150722-PaperReading-LiuGuangcan_XieLingxi-NUIST_TSINGHUA-publish.mp4</a> 、 <a href="http://bigml.cs.tsinghua.edu.cn/~lingxi/PDFs/Xie_ICMR15_ONE.pdf" target="_blank" rel="external">http://bigml.cs.tsinghua.edu.cn/~lingxi/PDFs/Xie_ICMR15_ONE.pdf</a>)</p>
+<p>caffe中：<br>Stochastic gradient descent (type: “SGD”) updates the weights W by a linear combination of the negative gradient ∇L(W) and the previous weight update V<sub>t</sub>. The learning rate α is the weight of the negative gradient. The momentum(动量) μ is the weight of the previous update.<br>Formally, we have the following formulas to compute the update value V<sub>t+1</sub> and the updated weights W<sub>t+1</sub> at iteration t+1, given the previous weight update V<sub>t</sub> and current weights WtWt:<br>V<sub>t+1</sub>=μV<sub>t</sub>−α∇L(W<sub>t</sub>)<br>W<sub>t</sub>+1=W<sub>t</sub>+V<sub>t+1</sub></p>
 
       
     </div>
@@ -298,17 +278,13 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/08/CFSS/" rel="next" title="CFSS">
-                <i class="fa fa-chevron-left"></i> CFSS
+              <a href="/2016/02/28/resnet-mxnet/" rel="next" title="resnet-mxnet">
+                <i class="fa fa-chevron-left"></i> resnet-mxnet
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/22/Note-for-剑指offer/" rel="prev" title="Note for 剑指offer">
-                Note for 剑指offer <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -334,8 +310,8 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/10/Classification-Retrieval/"
-           data-title="Classification_Retrieval" data-url="http://yoursite.com/2016/02/10/Classification-Retrieval/">
+      <div class="ds-thread" data-thread-key="2016/03/03/caffe-mxnet基础笔记/"
+           data-title="caffe&mxnet基础笔记" data-url="http://yoursite.com/2016/03/03/caffe-mxnet基础笔记/">
       </div>
     
   </div>
@@ -426,7 +402,7 @@ classification的训练过程对排除outlier很有用；Retrieval中没有类�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#classification_u4E0Eretrieval_u95EE_u9898_u5BF9_u6BD4"><span class="nav-number">1.</span> <span class="nav-text">classification与retrieval问题对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7528classification_u7684_u65B9_u6CD5_u89E3_u51B3retrieval_u95EE_u9898"><span class="nav-number">2.</span> <span class="nav-text">用classification的方法解决retrieval问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u590D_u6742_u5EA6_u5206_u6790"><span class="nav-number">3.</span> <span class="nav-text">复杂度分析</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目錄</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
