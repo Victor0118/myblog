@@ -264,7 +264,7 @@
             <p>###Note for DeepID2</p>
 <p>这几天开始读Deep Learning Face Representation by Joint Identification-Verification：<a href="http://arxiv.org/abs/1406.4773" target="_blank" rel="external">http://arxiv.org/abs/1406.4773</a><br>算法流程：<br><img src="/2016/03/03/caffe-mxnet基础笔记/1.png" alt="1.png" title=""></p>
 <p>Face identification是识别人是谁，相当于classification，verification是判断两个人是不是同一个人。</p>
-<p>mxnet里的expoch是指训练次数，每个epoch会训练所有的数据</p>
+<p>mxnet里的expoch是指训练次数，每个epoch会训练所有的数据<br>mxnet里的checkpoint表示保存中间模型，mx.callback.do_checkpoint(path),每次迭代都会保存，caffe用snapshot这个词表达，指定每多少次迭代保存</p>
 <p>Training: caffe train learns models from scratch, resumes learning from saved snapshots, and fine-tunes models to new data and tasks:</p>
 <ol>
 <li>All training requires a solver configuration through the -solver solver.prototxt argument.</li>
